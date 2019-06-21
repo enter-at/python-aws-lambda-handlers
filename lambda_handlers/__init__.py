@@ -6,4 +6,3 @@ from .handlers import LambdaHandler, HTTPHandler, http_handler  # noqa
 from .formatters import input_format, output_format  # noqa
 
 
-__version__ = '1.0.0'
