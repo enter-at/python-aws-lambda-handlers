@@ -8,7 +8,6 @@ from lambda_handlers.errors import (
     BadRequestError,
     ValidationError
 )
-from lambda_handlers.handlers import LambdaHandler
 from lambda_handlers.response import CorsHeaders
 from lambda_handlers.response.builder import (
     ok,
@@ -16,6 +15,7 @@ from lambda_handlers.response.builder import (
     bad_request,
     internal_server_error
 )
+from lambda_handlers.handlers.lambda_handler import LambdaHandler
 
 logger = logging.getLogger(__name__)
 

@@ -1,14 +1,22 @@
 from typing import Any, Dict, List, Tuple
 from collections import defaultdict
 
-from jsonschema import Draft7Validator
+from lambda_handlers.errors import LambdaError
 from lambda_handlers.validators import Validator
+
+try:
+    import jsonschema
+except ImportError:
+    jsonschema = None
 
 
 class JSONSchemaValidator(Validator):
 
     def validate(self, instance, schema) -> Tuple[Any, List[Any]]:
-        validator = Draft7Validator(schema)
+        if not jsonschema:
+            raise LambdaError('Required jsonschema dependency not found.')
+
+        validator = jsonschema.Draft7Validator(schema)
         errors = sorted(validator.iter_errors(instance), key=lambda error: error.path)
         return instance, errors
 
