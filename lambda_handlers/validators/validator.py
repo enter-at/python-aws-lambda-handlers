@@ -1,9 +1,10 @@
-import marshmallow
+from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Tuple
 
 from lambda_handlers.errors import ValidationError
 
 
-class Validator:
+class Validator(ABC):
 
     def __init__(self, path=None, query=None, body=None):
         self._path_parameters_schema = path
@@ -11,14 +12,14 @@ class Validator:
         self._body_schema = body
 
     def __call__(self, event, context):
-        errors = []
+        cumulative_errors = []
 
         def _validate(key, schema):
-            result = schema.load(event.get(key, {}))
-            if result.errors:
-                errors.append(result.errors)
+            data, errors = self.on_validate(event.get(key, {}), schema)
+            if errors:
+                cumulative_errors.append(errors)
             elif key in event:
-                event[key].update(result.data)
+                event[key].update(data)
 
         if self._path_parameters_schema:
             _validate('pathParameters', self._path_parameters_schema())
@@ -29,7 +30,14 @@ class Validator:
         if self._body_schema:
             _validate('body', self._body_schema())
 
-        if errors:
-            exception = marshmallow.ValidationError(errors)
-            description = exception.normalized_messages(no_field_name='errors')['errors']
+        if cumulative_errors:
+            description = self.format_errors(cumulative_errors)
             raise ValidationError(description)
+
+    @abstractmethod
+    def validate(self, instance: Any, schema: Any) -> Tuple[Any, List[Any]]:
+        pass
+
+    @abstractmethod
+    def format_errors(self, errors: List[Any]) -> List[Dict[str, Any]]:
+        pass
