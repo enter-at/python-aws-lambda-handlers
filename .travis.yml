@@ -13,12 +13,11 @@ script:
 - tox -e mypy
 deploy:
 - provider: pypi
-  distributions: sdist bdist_wheel
+  distributions: sdist 
   user: $TEST_PYPI_USER
+  password: $TEST_PYPI_PASS
   server: https://test.pypi.org/legacy/
   on:
     tags: true
     python: '3.7'
     repo: enter-at/lambda-handlers
-  password:
-    secure: wIajUT/Xc+68I2lxXxKVdj6p9SlLKtWjuH74gcxmul/4jxLYQDYI6RaX+eeHNXrUyrreIgZKK5GZ5VeaTNVxMvUs+81M8Rq7aUEbkpn1m0uS4DqTjmeOBARWfeJup3s7BVgnc3GfSPSs+LzDcODl8I2flREXlNC9Bm94VwIZm0HarNt1YgaQJa1mZHgzK6sr1GEqehG97t5mvL6a6LsdZFMdGeWpFxOCLQTifwhlVHxSLePG3YUa/qw4nQ3bQwr0k1dDRrZZG2YXm7XbC2asUqD0cXfkuz0Ft5LV88EYNPhZ2h3a8kgQ7L0lHRd23Qnfv5NN6O1BqcV9oSUZCIJ145EaE4cTVMEHRTIHmeGCa1MuBl9ba/DwBtuwmPrA8SOHq8wu1Q+uPWHNqsmawMdmcermvQ9Lq6zBztbSYwjlzU0+qt0wmiQF/up+vSl1Qai7VrzHsrsJ0v6YUt3AdHyBEPeBrXDR0zB055SDkO5voxtpqHEQuI1k/xvbKL4Rt7L4DIwuwXiGVWluUqmMLYyp1jLvFiCT6/KptIndpZJZTzT3RCee2jzrMgSdbAJT2SISeWz2of0osnR8lSXnUwdWs+80s/orYRJQ9UFDrdAPRbM5WX+vrJQ5D0JaCyotwBTWxk5KoxZ6/89BCQ9JP1EsYipfFpfvJmIQwnp6klsWSjQ=
