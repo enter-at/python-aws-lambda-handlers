@@ -88,7 +88,7 @@ coverage:
 	coverage report -m
 
 build:
-	python setup.py sdist 
+	python setup.py sdist bdist_wheel 
 
 tag: clean
 	@echo "Creating git tag v$(version)"
