@@ -9,7 +9,7 @@ install:
   - pipenv install --dev
   - pipenv run python setup.py develop
 
-script: |
+script:
   - tox -e lint
   - tox -e isort
   - tox -e mypy
