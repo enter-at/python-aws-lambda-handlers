@@ -17,14 +17,6 @@ var/
 *.egg
 *.pyc
 .tox
-
-# sphinx
-_build
-
-# Serverless directories
-.serverless
-
-# node js
-node_modules
-
+.mypy_cache
 .idea
+.vscode

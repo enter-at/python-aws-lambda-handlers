@@ -1,13 +1,21 @@
-from typing import Optional, Dict, Any
 import logging
+from typing import Any, Dict
 
 from lambda_handlers import formatters
-from lambda_handlers.response import Cors
-from lambda_handlers.handlers import LambdaHandler
-from lambda_handlers.types import APIGatewayProxyResult
-from lambda_handlers.errors import BadRequestError, NotFoundError, ValidationError
-from lambda_handlers.response.builder import not_found, bad_request, internal_server_error, ok
-
+from lambda_handlers.types import Headers, APIGatewayProxyResult
+from lambda_handlers.errors import (
+    NotFoundError,
+    BadRequestError,
+    ValidationError
+)
+from lambda_handlers.response import CorsHeaders
+from lambda_handlers.response.builder import (
+    ok,
+    not_found,
+    bad_request,
+    internal_server_error
+)
+from lambda_handlers.handlers.lambda_handler import LambdaHandler
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +30,7 @@ class HTTPHandler(LambdaHandler):
 
     Parameters
     ----------
-    cors: lambda_decorator.response.Cors
+    cors: lambda_decorator.response.CorsHeaders
         Definition of the CORS headers.
 
     body_format: Callable
@@ -39,7 +47,7 @@ class HTTPHandler(LambdaHandler):
         self._format_body = body_format or formatters.input_format.json
         self._validator = validation
         self._format_output = output_format or formatters.output_format.json
-        self._cors = cors or Cors(origin='*', credentials=True)
+        self._cors = cors or CorsHeaders(origin='*', credentials=True)
 
     def before(self, event, context):
         self._validate(event, context)
@@ -62,17 +70,18 @@ class HTTPHandler(LambdaHandler):
         if 'body' in event:
             event['body'] = self._format_body(event['body'])
 
-    def _create_response(self, result: APIGatewayProxyResult) -> Dict[str, any]:
+    def _create_response(self, result: APIGatewayProxyResult) -> Dict[str, Any]:
         result.headers = self._create_headers(result.headers)
         result.body = self._format_output(result.body)
         return result.asdict()
 
-    def _create_headers(self, headers: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    def _create_headers(self, headers: Headers) -> Headers:
         if not headers:
             headers = {}
 
         if self._cors:
             headers.update(self._cors.create_headers())
+
         return headers or None
 
     def _handle_error(self, error) -> APIGatewayProxyResult:

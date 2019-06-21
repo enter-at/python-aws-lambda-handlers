@@ -1,3 +1,4 @@
+dist: xenial # required for Python >= 3.7
 language: python
 python:
   - "3.7"
@@ -8,17 +9,19 @@ install:
   - pipenv install --dev
   - pipenv run python setup.py develop
 
-script: |
-  set -e
-  pipenv run pytest
-deploy:
-  - provider: pypi
-    twine_version: 1.12.1
-    distributions: sdist bdist_wheel
-    on:
-      tags: true
-      python: 3.6
-      repo: enter-at/lambda-handlers
-    user: enterat
-    password:
-      secure: xxx
+script:
+  - tox -e lint
+  - tox -e isort
+  - tox -e mypy
+  # - tox -e tests
+# deploy:
+#   - provider: pypi
+#     twine_version: 1.12.1
+#     distributions: sdist bdist_wheel
+#     on:
+#       tags: true
+#       python: 3.6
+#       repo: enter-at/lambda-handlers
+#     user: enterat
+#     password:
+#       secure: xxx

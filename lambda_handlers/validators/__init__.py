@@ -1,2 +1,3 @@
-from .jsonschema import json_schema_validator  # noqa
-from .marshmallow import Validator as marshmallow  # noqa
+from .validator import Validator  # noqa
+from .jsonschema_validator import JSONSchemaValidator as jsonschema  # noqa
+from .marshmallow_validator import MarshmallowValidator as marshmallow  # noqa
