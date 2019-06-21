@@ -1,3 +1,3 @@
-from .cors_headers import Cors  # noqa
+from .cors_headers import CorsHeaders  # noqa
 
-cors = Cors
+cors = CorsHeaders
