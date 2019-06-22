@@ -1,22 +1,23 @@
 dist: xenial
 language: python
 python:
-- '3.7'
+  - "3.7"
 install:
-- pip install -U pip setuptools
-- pip install pipenv
-- pipenv install --dev
-- pipenv run python setup.py develop
+  - pip install -U pip setuptools
+  - pip install pipenv
+  - pipenv install --dev
+  - pipenv run python setup.py develop
 script:
-- tox -e lint
-- tox -e isort
-- tox -e mypy
+  - tox -e lint
+  - tox -e isort
+  - tox -e mypy
+  - tox -e tests
 deploy:
-- provider: pypi
-  distributions: sdist bdist_wheel
-  user: $PYPI_USER
-  password: $PYPI_PASS
-  on:
-    tags: true
-    python: '3.7'
-    repo: enter-at/lambda-handlers
+  - provider: pypi
+    distributions: sdist bdist_wheel
+    user: $PYPI_USER
+    password: $PYPI_PASS
+    on:
+      tags: true
+      python: "3.7"
+      repo: enter-at/lambda-handlers
