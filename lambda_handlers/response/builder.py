@@ -8,7 +8,7 @@ from lambda_handlers.errors import (
     NotFoundError,
     ForbiddenError,
     BadRequestError,
-    InternalServerError
+    InternalServerError,
 )
 
 
@@ -20,6 +20,10 @@ def bad_request(description: str) -> APIGatewayProxyResult:
 def forbidden(description: str) -> APIGatewayProxyResult:
     error = ForbiddenError(description)
     return _build_request(error, HTTPStatus.FORBIDDEN)
+
+
+def bad_implementation(description: str = None) -> APIGatewayProxyResult:
+    return internal_server_error(description)
 
 
 def internal_server_error(description: str = None) -> APIGatewayProxyResult:
@@ -40,10 +44,7 @@ def created(result: str) -> APIGatewayProxyResult:
     return _build_request(result, HTTPStatus.CREATED)
 
 
-def _build_request(
-    result: Union[LambdaError, Any],
-    status_code: HTTPStatus
-) -> APIGatewayProxyResult:
+def _build_request(result: Union[LambdaError, Any], status_code: HTTPStatus) -> APIGatewayProxyResult:
     if isinstance(result, LambdaError):
         body = {'errors': result.description}
     else:

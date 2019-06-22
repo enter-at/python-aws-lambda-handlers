@@ -4,7 +4,7 @@ from .errors import (  # noqa
     NotFoundError,
     ForbiddenError,
     BadRequestError,
-    InternalServerError
+    InternalServerError,
 )
 from .handlers import HTTPHandler, LambdaHandler, http_handler  # noqa
 from .response import builder, cors_headers  # noqa
