@@ -6,13 +6,15 @@ from lambda_handlers.types import Headers, APIGatewayProxyResult
 from lambda_handlers.errors import (
     NotFoundError,
     BadRequestError,
-    ValidationError
+    ValidationError,
+    ResponseValidationError
 )
 from lambda_handlers.response import CorsHeaders
 from lambda_handlers.response.builder import (
     ok,
     not_found,
     bad_request,
+    bad_implementation,
     internal_server_error
 )
 from lambda_handlers.handlers.lambda_handler import LambdaHandler
@@ -50,21 +52,29 @@ class HTTPHandler(LambdaHandler):
         self._cors = cors or CorsHeaders(origin='*', credentials=True)
 
     def before(self, event, context):
-        self._validate(event, context)
+        self._validate_request(event, context)
         self._parse_body(event)
         return event, context
 
     def after(self, result):
         if not isinstance(result, APIGatewayProxyResult) and 'statusCode' not in result:
             result = ok(result)
-        return self._create_response(result)
+        response = self._create_response(result)
+        self._validate_response(response)
+        return response
 
     def on_exception(self, exception):
         return self._create_response(self._handle_error(exception))
 
-    def _validate(self, event, context):
+    def _validate_request(self, event, context):
         if self._validator:
-            self._validator(event, context)
+            transformed_event = transformed_context = self._validator.validate_request(event, context)
+            event.update(transformed_event)
+            context.update(transformed_context)
+
+    def _validate_response(self, response):
+        if self._validator:
+            self._validator.validate_response(response)
 
     def _parse_body(self, event):
         if 'body' in event:
@@ -87,9 +97,9 @@ class HTTPHandler(LambdaHandler):
     def _handle_error(self, error) -> APIGatewayProxyResult:
         if isinstance(error, NotFoundError):
             return not_found(str(error))
-        if isinstance(error, ValidationError):
-            return bad_request(str(error))
-        if isinstance(error, BadRequestError):
+        if isinstance(error, ResponseValidationError):
+            return bad_implementation(str(error))
+        if isinstance(error, (BadRequestError, ValidationError)):
             return bad_request(str(error))
 
         logger.error(error)
