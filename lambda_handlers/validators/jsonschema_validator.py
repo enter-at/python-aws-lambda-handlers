@@ -10,9 +10,12 @@ except ImportError:
     jsonschema = None
 
 
+JSONSchemaInstance = Dict[str, Any]
+
+
 class JSONSchemaValidator(Validator):
 
-    def validate(self, instance, schema) -> Tuple[Any, List[Any]]:
+    def validate(self, instance, schema: JSONSchemaInstance) -> Tuple[Any, List[Any]]:
         if not jsonschema:
             raise LambdaError('Required jsonschema dependency not found.')
 
@@ -20,7 +23,7 @@ class JSONSchemaValidator(Validator):
         errors = sorted(validator.iter_errors(instance), key=lambda error: error.path)
         return instance, errors
 
-    def format_error(self, errors) -> List[Dict[str, Any]]:
+    def format_errors(self, errors) -> List[Dict[str, Any]]:
         path_errors: Dict[str, List[str]] = defaultdict(list)
         for error in errors:
             path_errors[error.path.pop()].append(error.message)

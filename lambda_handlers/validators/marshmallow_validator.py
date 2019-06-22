@@ -8,18 +8,21 @@ try:
 except ImportError:
     marshmallow = None
 
-NO_FIELD_NAME = 'errors'
+NO_FIELD_NAME = '__no_field_name__'
 
 
 class MarshmallowValidator(Validator):
 
-    def validate(self, instance, schema) -> Tuple[Any, List[Any]]:
+    def validate(self, instance, schema: marshmallow.Schema) -> Tuple[Any, List[Any]]:
         if not marshmallow:
             raise LambdaError('Required marshmallow dependency not found.')
 
         result = schema.load(instance)
         return result.data, result.errors
 
-    def format_error(self, errors) -> List[Dict[str, Any]]:
+    def format_errors(self, errors) -> List[Dict[str, Any]]:
         exception = marshmallow.ValidationError(errors)
-        return exception.normalized_messages(no_field_name=NO_FIELD_NAME).get(NO_FIELD_NAME, None)
+        field_errors = exception.normalized_messages(no_field_name=NO_FIELD_NAME)
+        if not field_errors.get(NO_FIELD_NAME) and len(field_errors) == 1:
+            return []
+        return [{field: errors} for field, errors in field_errors.items()]

@@ -7,7 +7,7 @@ from lambda_handlers.errors import (
     NotFoundError,
     BadRequestError,
     ValidationError,
-    ResponseValidationError
+    ResponseValidationError,
 )
 from lambda_handlers.response import CorsHeaders
 from lambda_handlers.response.builder import (
@@ -15,7 +15,7 @@ from lambda_handlers.response.builder import (
     not_found,
     bad_request,
     bad_implementation,
-    internal_server_error
+    internal_server_error,
 )
 from lambda_handlers.handlers.lambda_handler import LambdaHandler
 

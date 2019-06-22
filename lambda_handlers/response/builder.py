@@ -8,7 +8,7 @@ from lambda_handlers.errors import (
     NotFoundError,
     ForbiddenError,
     BadRequestError,
-    InternalServerError
+    InternalServerError,
 )
 
 

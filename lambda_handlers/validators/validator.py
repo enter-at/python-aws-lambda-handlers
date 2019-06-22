@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Tuple, Callable
 
 from lambda_handlers.errors import (
     RequestValidationError,
-    ResponseValidationError
+    ResponseValidationError,
 )
 
 
@@ -18,7 +18,7 @@ class Validator(ABC):
 
     def validate_request(self, event, context) -> Tuple[Any, Any]:
         if self._request_schema:
-            data, errors = self.validate(event, self._request_schema())
+            data, errors = self.validate(event, self._request_schema)
         else:
             data, errors = self._validate_request_contexts(event, context)
 
@@ -32,7 +32,7 @@ class Validator(ABC):
         if not self._response_schema:
             return response
 
-        data, errors = self.validate(response, self._response_schema())
+        data, errors = self.validate(response, self._response_schema)
 
         if errors:
             description = self.format_errors(errors)
