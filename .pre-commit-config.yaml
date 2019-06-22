@@ -36,12 +36,11 @@ repos:
       name: tox lint
       entry: tox -e lint
       language: system
-
-#      -   id: mypy
-#          name: tox mypy
-#          entry: tox -e mypy
-#          language: system
-#          types: [python]
+    - id: mypy
+      name: tox mypy
+      entry: tox -e mypy
+      language: system
+      types: [python]
 #      -   id: test
 #          name: tox tests
 #          entry: tox -e tests
