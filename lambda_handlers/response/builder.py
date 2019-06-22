@@ -22,6 +22,10 @@ def forbidden(description: str) -> APIGatewayProxyResult:
     return _build_request(error, HTTPStatus.FORBIDDEN)
 
 
+def bad_implementation(description: str = None) -> APIGatewayProxyResult:
+    return internal_server_error(description)
+
+
 def internal_server_error(description: str = None) -> APIGatewayProxyResult:
     error = InternalServerError(description or 'InternalServerError')
     return _build_request(error, HTTPStatus.INTERNAL_SERVER_ERROR)
@@ -40,10 +44,7 @@ def created(result: str) -> APIGatewayProxyResult:
     return _build_request(result, HTTPStatus.CREATED)
 
 
-def _build_request(
-    result: Union[LambdaError, Any],
-    status_code: HTTPStatus
-) -> APIGatewayProxyResult:
+def _build_request(result: Union[LambdaError, Any], status_code: HTTPStatus) -> APIGatewayProxyResult:
     if isinstance(result, LambdaError):
         body = {'errors': result.description}
     else:

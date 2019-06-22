@@ -21,3 +21,11 @@ class NotFoundError(LambdaError):
 
 class ValidationError(LambdaError):
     pass
+
+
+class RequestValidationError(ValidationError):
+    pass
+
+
+class ResponseValidationError(ValidationError):
+    pass
