@@ -1,4 +1,4 @@
-.PHONY: help clean clean-pyc clean-build list test test-dbg test-cov test-all coverage docs release sdist install deps develop tag
+.PHONY: help clean clean-pyc clean-build list test test-dbg test-cov test-all coverage docs release sdist install install-dev install-ci buil tag lint mypy isort isort-check
 
 project-name = lambda_handlers
 
@@ -7,23 +7,24 @@ version-string := $(shell grep $(version-var) $(project-name)/version.py)
 version := $(subst __version__ = ,,$(version-string))
 
 help:
+	@echo "install - install"
+	@echo "install-dev - install also development dependencies"
+	@echo "clean - clean all below"
 	@echo "clean-build - remove build artifacts"
 	@echo "clean-pyc - remove Python file artifacts"
+	@echo "clean-tox - clean tox cache"
 	@echo "lint - check style with flake8"
 	@echo "test - run tests quickly with the default Python"
 	@echo "test-cov - run tests with the default Python and report coverage"
 	@echo "test-dbg - run tests and debug with pdb"
-	@echo "testloop - run tests in a loop"
-	@echo "coverage - check code coverage quickly with the default Python"
-	@echo "docs - generate Sphinx HTML documentation, including API docs"
-	@echo "release - package and upload a release"
-	@echo "sdist - package"
-	@echo "install - install"
-	@echo "develop - install in development mode"
-	@echo "deps - install dependencies"
-	@echo "dev_deps - install dependencies for development"
-	@echo "release - package a release in wheel and tarball"
-	@echo "upload - make a release and run the scripts/deploy.sh"
+	@echo "develop - run tests in loop mode"
+	@echo "deploy - deploy"
+	@echo "mypy - check type hinting with mypy"
+	@echo "isort - sort imports"
+	@echo "isort-check - check if your imports are correctly sorted"
+	@echo "tag - create a git tag with current version"
+	@echo "build - create the distribution package"
+	@echo "release - package a release in wheel and tarball, requires twine"
 	@echo "tag - create a git tag with current version"
 
 install:
@@ -31,22 +32,25 @@ install:
 	pipenv install
 	python setup.py install
 
-install-dev:
+install-ci:
 	pip install pipenv
 	pipenv install --dev
 	python setup.py develop
+
+install-dev: install-ci
+	pre-commit install
 
 clean: clean-build clean-pyc clean-tox
 
 clean-build:
 	rm -fr build/
 	rm -fr dist/
+	rm -fr .eggs/
 	rm -fr *.egg-info
 	rm -fr *.spec
 
 clean-pyc:
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
+	pyclean $(project-name)
 	find . -name '*~' -exec rm -f {} +
 	find . -name __pycache__ -exec rm -rf {} +
 	find . -name '*.log*' -delete
@@ -80,7 +84,7 @@ test-cov:
 test-dbg:
 	py.test --pdb
 
-testloop:
+develop:
 	py.test -f
 
 coverage:
@@ -88,7 +92,7 @@ coverage:
 	coverage report -m
 
 build:
-	python setup.py sdist bdist_wheel 
+	python setup.py sdist bdist_wheel
 
 tag: clean
 	@echo "Creating git tag v$(version)"
