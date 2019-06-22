@@ -264,14 +264,6 @@
             ],
             "version": "==0.2.0"
         },
-        "isort": {
-            "hashes": [
-                "sha256:c40744b6bc5162bbb39c1257fe298b7a393861d50978b565f3ccd9cb9de0182a",
-                "sha256:f57abacd059dc3bd666258d1efb0377510a89777fda3e3274e3c01f7c03ae22d"
-            ],
-            "index": "pypi",
-            "version": "==4.3.20"
-        },
         "jinja2": {
             "hashes": [
                 "sha256:065c4f02ebe7f7cf559e49ee5a95fb800a9e4528727aec6f24402a5374c65013",
@@ -500,9 +492,6 @@
             "version": "==1.0.2"
         },
         "pytest-only": {
-            "hashes": [
-                "sha256:221d9c8094dde089d1c2dac6972ae2b47d95a8e13d5282e0289f8b27f06e3637"
-            ],
             "index": "pypi",
             "version": "==1.2.1"
         },
