@@ -2,13 +2,14 @@ from typing import Any, Dict
 
 import pytest
 from marshmallow import Schema, ValidationError, fields, validates_schema
+from marshmallow.validate import Range
 
 from ..marshmallow_validator import MarshmallowValidator
 
 
 class EventSchema(Schema):
-    price = fields.Integer(required=True, min=1, max=100)
-    total = fields.Integer(min=1, max=100)
+    price = fields.Integer(required=True, validate=Range(min=1, max=100))
+    total = fields.Integer(validate=Range(min=1, max=99))
 
 
 class NotOptionalEventSchema(EventSchema):
@@ -67,12 +68,12 @@ class TestMarshmallowSchemaValidator:
 class TestMarshmallowSchemaValidatorFormatErrors:
 
     def test_format_errors(self, validator, schema):
-        event = {'price': 'xx100', 'total': 'xx300'}
+        event = {'price': 'xx100', 'total': 100}
         instance, errors = validator.validate(event, schema)
         formatted_errors = validator.format_errors(errors)
         assert len(formatted_errors) == 2
-        assert {'price': ["Not a valid integer."]} in formatted_errors
-        assert {'total': ["Not a valid integer."]} in formatted_errors
+        assert {'price': ['Not a valid integer.']} in formatted_errors
+        assert {'total': ['Must be between 1 and 99.']} in formatted_errors
 
     def test_format_empty_list_of_errors(self, validator, schema):
         assert validator.format_errors([]) == []
