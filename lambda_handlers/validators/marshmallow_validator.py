@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Union
 
 from lambda_handlers.errors import LambdaError
 from lambda_handlers.validators import Validator
@@ -17,7 +17,7 @@ class MarshmallowValidator(Validator):
         self,
         instance: Any,
         schema: marshmallow.Schema,
-    ) -> Tuple[Any, List[Any]]:
+    ) -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
 
         if not marshmallow:
             raise LambdaError('Required marshmallow dependency not found.')
@@ -27,7 +27,7 @@ class MarshmallowValidator(Validator):
 
     def format_errors(
         self,
-        errors: List[Dict[str, Any]],
+        errors: Union[Dict[str, Any], List[Any]],
     ) -> List[Dict[str, Any]]:
 
         exception = marshmallow.ValidationError(errors)

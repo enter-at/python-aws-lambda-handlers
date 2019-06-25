@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Union
 from collections import defaultdict
 
 from lambda_handlers.errors import LambdaError
@@ -9,13 +9,17 @@ try:
 except ImportError:
     jsonschema = None
 
-
 JSONSchemaInstance = Dict[str, Any]
 
 
 class JSONSchemaValidator(Validator):
 
-    def validate(self, instance, schema: JSONSchemaInstance) -> Tuple[Any, List[Any]]:
+    def validate(
+        self,
+        instance,
+        schema: JSONSchemaInstance,
+    ) -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
+
         if not jsonschema:
             raise LambdaError('Required jsonschema dependency not found.')
 
