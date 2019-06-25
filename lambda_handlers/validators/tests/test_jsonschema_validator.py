@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 import pytest
 
-from ..jsonschema_validator import JSONSchemaValidator
+from lambda_handlers.validators.jsonschema_validator import JSONSchemaValidator
 
 
 @pytest.fixture(scope='session')
@@ -11,7 +11,7 @@ def schema() -> Dict[str, Any]:
         'type': 'object',
         'properties': {
             'price': {'type': 'number'},
-        }
+        },
     }
 
 
