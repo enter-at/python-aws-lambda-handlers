@@ -1,6 +1,3 @@
-import json
-from typing import Dict, Union
-
 import pytest
 
 from lambda_handlers.formatters import (
@@ -10,19 +7,19 @@ from lambda_handlers.formatters import (
 )
 
 
-@pytest.fixture
-def data_sample() -> Dict[str, Union[str, int, bool]]:
-    return {
-        'name': 'Peter',
-        'score': 100,
-        'valid': True,
-    }
-
-
 class TestInputFormatJSON:
 
-    def test_valid(self, data_sample):
-        assert data_sample == input_format.json(json.dumps(data_sample))
+    def test_valid_string_dict(self):
+        assert {'name': 'Peter'} == input_format.json('{"name": "Peter"}')
+
+    def test_valid_int_dict(self):
+        assert {'score': 100} == input_format.json('{"score": 100}')
+
+    def test_valid_bool_dict(self):
+        assert {'is_valid': True} == input_format.json('{"is_valid": true}')
+
+    def test_valid_nested_dict(self):
+        assert {'person': {'name': 'Peter'}} == input_format.json('{"person": {"name": "Peter"}}')
 
     def test_empty_content(self):
         assert {} == input_format.json('{}')
@@ -42,12 +39,17 @@ class TestInputFormatJSON:
 
 class TestOutputFormatJSON:
 
-    def test_valid(self, data_sample):
-        assert json.dumps(data_sample) == output_format.json(data_sample)
+    def test_valid_string_dict(self):
+        assert '{"name": "Peter"}' == output_format.json({'name': 'Peter'})
 
-    def test_data_sample(self, data_sample):
-        content = json.dumps(data_sample)
-        assert json.dumps(content) == output_format.json(content)
+    def test_valid_int_dict(self):
+        assert '{"score": 100}' == output_format.json({'score': 100})
+
+    def test_valid_bool_dict(self):
+        assert '{"is_valid": true}' == output_format.json({'is_valid': True})
+
+    def test_valid_nested_dict(self):
+        assert '{"person": {"name": "Peter"}}' == output_format.json({'person': {'name': 'Peter'}})
 
     def test_empty_content(self):
         assert '{}' == output_format.json({})
