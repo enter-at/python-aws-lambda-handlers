@@ -10,14 +10,14 @@ from lambda_handlers.errors import (
     ResponseValidationError,
 )
 from lambda_handlers.response import CorsHeaders
-from lambda_handlers.response.builder import (
+from lambda_handlers.handlers.lambda_handler import LambdaHandler
+from lambda_handlers.response.response_builder import (
     ok,
     not_found,
     bad_request,
     bad_implementation,
     internal_server_error,
 )
-from lambda_handlers.handlers.lambda_handler import LambdaHandler
 
 logger = logging.getLogger(__name__)
 

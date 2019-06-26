@@ -7,6 +7,6 @@ from .errors import (  # noqa
     InternalServerError,
 )
 from .handlers import HTTPHandler, LambdaHandler, http_handler  # noqa
-from .response import builder, cors_headers  # noqa
+from .response import cors_headers, response_builder  # noqa
 from .formatters import input_format, output_format  # noqa
 from .validators import jsonschema, marshmallow  # noqa
