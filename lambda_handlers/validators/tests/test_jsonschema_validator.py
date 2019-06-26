@@ -2,6 +2,7 @@ from typing import Any, Dict
 
 import pytest
 
+from lambda_handlers.validators import Validator
 from lambda_handlers.validators.jsonschema_validator import JSONSchemaValidator
 
 
@@ -21,6 +22,9 @@ def validator(schema) -> JSONSchemaValidator:
 
 
 class TestJSONSchemaValidator:
+
+    def test_create(self, validator):
+        assert isinstance(validator, Validator)
 
     def test_validate_valid_data(self, validator, schema):
         event = {'price': 100}
