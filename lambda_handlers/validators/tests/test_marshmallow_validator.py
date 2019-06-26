@@ -4,6 +4,7 @@ import pytest
 from marshmallow import Schema, ValidationError, fields, validates_schema
 from marshmallow.validate import Range
 
+from lambda_handlers.validators import Validator
 from lambda_handlers.validators.marshmallow_validator import (
     MarshmallowValidator,
 )
@@ -37,6 +38,9 @@ def validator(schema) -> MarshmallowValidator:
 
 
 class TestMarshmallowSchemaValidator:
+
+    def test_create(self, validator):
+        assert isinstance(validator, Validator)
 
     def test_validate_valid_data(self, validator, schema):
         event = {'price': 100}
