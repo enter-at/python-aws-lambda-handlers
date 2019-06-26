@@ -1,4 +1,4 @@
-from typing import Dict, Union, Optional
+from typing import Any, Dict, Union, Optional
 from dataclasses import asdict, dataclass
 
 Headers = Optional[Dict[str, Union[str, bool, int]]]
@@ -10,7 +10,7 @@ class APIGatewayProxyResult:
     Key names are expected and given by AWS APIGateway specifications and must not be changed
     """
     statusCode: int
-    body: str
+    body: Union[str, Dict[str, Any]]
     headers: Headers = None
     multiValueHeaders: Headers = None
     isBase64Encoded: Optional[bool] = None
