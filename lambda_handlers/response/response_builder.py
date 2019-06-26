@@ -12,30 +12,30 @@ from lambda_handlers.errors import (
 
 
 def ok(result: str) -> APIGatewayProxyResult:
-    return _build_request(result, HTTPStatus.OK)
+    return _build_response(result, HTTPStatus.OK)
 
 
 def created(result: str) -> APIGatewayProxyResult:
-    return _build_request(result, HTTPStatus.CREATED)
+    return _build_response(result, HTTPStatus.CREATED)
 
 
 def no_content() -> APIGatewayProxyResult:
-    return _build_request(None, HTTPStatus.NO_CONTENT)
+    return _build_response(None, HTTPStatus.NO_CONTENT)
 
 
 def not_found(description: str) -> APIGatewayProxyResult:
     error = NotFoundError(description)
-    return _build_request(error, HTTPStatus.NOT_FOUND)
+    return _build_response(error, HTTPStatus.NOT_FOUND)
 
 
 def bad_request(description: str) -> APIGatewayProxyResult:
     error = BadRequestError(description)
-    return _build_request(error, HTTPStatus.BAD_REQUEST)
+    return _build_response(error, HTTPStatus.BAD_REQUEST)
 
 
 def forbidden(description: str) -> APIGatewayProxyResult:
     error = ForbiddenError(description)
-    return _build_request(error, HTTPStatus.FORBIDDEN)
+    return _build_response(error, HTTPStatus.FORBIDDEN)
 
 
 def bad_implementation(description: str = None) -> APIGatewayProxyResult:
@@ -44,10 +44,10 @@ def bad_implementation(description: str = None) -> APIGatewayProxyResult:
 
 def internal_server_error(description: str = None) -> APIGatewayProxyResult:
     error = InternalServerError(description or 'An internal server error occurred')
-    return _build_request(error, HTTPStatus.INTERNAL_SERVER_ERROR)
+    return _build_response(error, HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
-def _build_request(result: Union[LambdaError, Any], status_code: HTTPStatus) -> APIGatewayProxyResult:
+def _build_response(result: Union[LambdaError, Any], status_code: HTTPStatus) -> APIGatewayProxyResult:
     if isinstance(result, LambdaError):
         body = {'errors': result.description}
     else:
