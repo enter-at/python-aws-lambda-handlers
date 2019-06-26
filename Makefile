@@ -85,7 +85,7 @@ test-dbg:
 	py.test --pdb
 
 develop:
-	py.test -f
+	py.test --color=yes -f
 
 coverage:
 	pytest --cov=hansel

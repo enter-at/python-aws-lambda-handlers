@@ -23,6 +23,10 @@ class ValidationError(LambdaError):
     pass
 
 
+class FormattingError(LambdaError):
+    pass
+
+
 class RequestValidationError(ValidationError):
     pass
 
