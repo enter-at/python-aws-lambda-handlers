@@ -39,11 +39,11 @@ def forbidden(description: str) -> APIGatewayProxyResult:
 
 
 def bad_implementation(description: str = None) -> APIGatewayProxyResult:
-    return internal_server_error(description or 'BadImplementation')
+    return internal_server_error(description)
 
 
 def internal_server_error(description: str = None) -> APIGatewayProxyResult:
-    error = InternalServerError(description or 'InternalServerError')
+    error = InternalServerError(description or 'An internal server error occurred')
     return _build_request(error, HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
