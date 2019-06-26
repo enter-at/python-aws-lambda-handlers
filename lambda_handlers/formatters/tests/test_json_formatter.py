@@ -3,7 +3,11 @@ from typing import Dict, Union
 
 import pytest
 
-from lambda_handlers.formatters import input_format, output_format
+from lambda_handlers.formatters import (
+    FormattingError,
+    input_format,
+    output_format,
+)
 
 
 @pytest.fixture
@@ -24,15 +28,15 @@ class TestInputFormatJSON:
         assert {} == input_format.json('{}')
 
     def test_random_string(self):
-        with pytest.raises(json.decoder.JSONDecodeError, match=r'Expecting value: line 1 column 1 \(char 0\)'):
+        with pytest.raises(FormattingError, match='Invalid JSON input.'):
             input_format.json('sadfawfopq2yr923')
 
     def test_empty_string(self):
-        with pytest.raises(json.decoder.JSONDecodeError, match=r'Expecting value: line 1 column 1 \(char 0\)'):
+        with pytest.raises(FormattingError, match='Invalid JSON input.'):
             input_format.json('')
 
     def test_none(self):
-        with pytest.raises(TypeError, match='the JSON object must be str, bytes or bytearray, not NoneType'):
+        with pytest.raises(FormattingError, match='Unexpected type for JSON input.'):
             input_format.json(None)
 
 
@@ -40,6 +44,10 @@ class TestOutputFormatJSON:
 
     def test_valid(self, data_sample):
         assert json.dumps(data_sample) == output_format.json(data_sample)
+
+    def test_data_sample(self, data_sample):
+        content = json.dumps(data_sample)
+        assert json.dumps(content) == output_format.json(content)
 
     def test_empty_content(self):
         assert '{}' == output_format.json({})

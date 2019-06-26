@@ -1,4 +1,5 @@
 from . import json_formatter
+from ..errors import FormattingError  # noqa
 
 
 class InputFormat:
