@@ -11,6 +11,7 @@ from lambda_handlers.errors import (
     ResponseValidationError,
 )
 from lambda_handlers.response import CorsHeaders
+from lambda_handlers.validators import Validator
 from lambda_handlers.handlers.lambda_handler import LambdaHandler
 from lambda_handlers.response.response_builder import (
     ok,
@@ -48,20 +49,19 @@ class HTTPHandler(LambdaHandler):
 
     def __init__(self, cors=None, body_format=None, output_format=None, validation=None):
         self._format_body = body_format or formatters.input_format.json
-        self._validator = validation
+        self._validator: Validator = validation
         self._format_output = output_format or formatters.output_format.json
         self._cors = cors or CorsHeaders(origin='*', credentials=True)
 
     def before(self, event, context):
-        self._validate_request(event, context)
         self._parse_body(event)
+        self._validate_request(event, context)
         return event, context
 
     def after(self, result):
         if not isinstance(result, APIGatewayProxyResult) and 'statusCode' not in result:
             result = ok(result)
         response = self._create_response(result)
-        self._validate_response(response)
         return response
 
     def on_exception(self, exception):
@@ -69,13 +69,15 @@ class HTTPHandler(LambdaHandler):
 
     def _validate_request(self, event, context):
         if self._validator:
-            transformed_event = transformed_context = self._validator.validate_request(event, context)
+            transformed_event, transformed_context = self._validator.validate_request(event, context)
             event.update(transformed_event)
-            context.update(transformed_context)
+            if context is not None:
+                context.update(transformed_context)
 
-    def _validate_response(self, response):
+    def _validate_response(self, response: Dict[str, Any]) -> Dict[str, Any]:
         if self._validator:
-            self._validator.validate_response(response)
+            return self._validator.validate_response(response)
+        return response
 
     def _parse_body(self, event):
         if 'body' in event:
@@ -86,8 +88,9 @@ class HTTPHandler(LambdaHandler):
 
     def _create_response(self, result: APIGatewayProxyResult) -> Dict[str, Any]:
         result.headers = self._create_headers(result.headers)
-        result.body = self._format_output(result.body)
-        return result.asdict()
+        response = self._validate_response(result.asdict())
+        response['body'] = self._format_output(response['body'])
+        return response
 
     def _create_headers(self, headers: Headers) -> Headers:
         if not headers:
