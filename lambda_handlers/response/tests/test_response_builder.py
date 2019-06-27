@@ -21,9 +21,7 @@ class TestResponseBuilder:
             ('invalid payload', bad_request, 400, {'errors': 'invalid payload'}),
             ('missing credentials', forbidden, 403, {'errors': 'missing credentials'}),
             ('invalid response format', bad_implementation, 500, {'errors': 'invalid response format'}),
-            (None, bad_implementation, 500, {'errors': 'An internal server error occurred'}),
             ('unknown error', internal_server_error, 500, {'errors': 'unknown error'}),
-            (None, internal_server_error, 500, {'errors': 'An internal server error occurred'}),
             ('user not found', not_found, 404, {'errors': 'user not found'}),
             ({'user': 'Peter Fox'}, ok, 200, {'user': 'Peter Fox'}),
             ({'user_id': 1245}, created, 201, {'user_id': 1245}),
@@ -42,6 +40,8 @@ class TestResponseBuilder:
         'builder, status_code, body',
         [
             (no_content, 204, None),
+            (bad_implementation, 500, {'errors': 'An internal server error occurred'}),
+            (internal_server_error, 500, {'errors': 'An internal server error occurred'}),
         ],
     )
     def test_builder_without_description(self, builder, status_code, body):
