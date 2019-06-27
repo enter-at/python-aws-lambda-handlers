@@ -6,6 +6,7 @@ from lambda_handlers.types import Headers, APIGatewayProxyResult
 from lambda_handlers.errors import (
     NotFoundError,
     BadRequestError,
+    FormattingError,
     ValidationError,
     ResponseValidationError,
 )
@@ -78,7 +79,10 @@ class HTTPHandler(LambdaHandler):
 
     def _parse_body(self, event):
         if 'body' in event:
-            event['body'] = self._format_body(event['body'])
+            try:
+                event['body'] = self._format_body(event['body'])
+            except FormattingError as error:
+                raise FormattingError([{'body': [error.description]}])
 
     def _create_response(self, result: APIGatewayProxyResult) -> Dict[str, Any]:
         result.headers = self._create_headers(result.headers)
@@ -96,11 +100,11 @@ class HTTPHandler(LambdaHandler):
 
     def _handle_error(self, error) -> APIGatewayProxyResult:
         if isinstance(error, NotFoundError):
-            return not_found(str(error))
+            return not_found(error.description)
         if isinstance(error, ResponseValidationError):
-            return bad_implementation(str(error))
-        if isinstance(error, (BadRequestError, ValidationError)):
-            return bad_request(str(error))
+            return bad_implementation(error.description)
+        if isinstance(error, (BadRequestError, FormattingError, ValidationError)):
+            return bad_request(error.description)
 
         logger.error(error)
         return internal_server_error()
