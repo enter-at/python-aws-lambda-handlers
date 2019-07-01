@@ -1,0 +1,22 @@
+{
+  "name": "lambda-handlers",
+  "description": "An opinionated Python package that facilitates specifying AWS Lambda handlers including input validation, error handling and response formatting",
+  "dependencies": {},
+  "devDependencies": {
+    "@semantic-release/changelog": "^3.0.2",
+    "@semantic-release/exec": "^3.3.2",
+    "@semantic-release/git": "^7.0.8",
+    "@semantic-release/github": "^5.4.0",
+    "semantic-release": "^15.13.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enter-at/lambda-handlers.git"
+  },
+  "author": "",
+  "license": "",
+  "homepage": "https://github.com/enter-at/lambda-handlers",
+  "scripts": {
+    "semantic-release": "semantic-release"
+  }
+}
