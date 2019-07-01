@@ -14,10 +14,11 @@ script:
   - tox -e isort
   - tox -e mypy
   - tox -e tests
-before_deploy:
-  - npm ci
-  - npm run semantic-release
 deploy:
+  - provider: script
+    script: ci-scripts/release.sh
+    on:
+      branch: master
   - provider: pypi
     distributions: sdist bdist_wheel
     user: $PYPI_USER
