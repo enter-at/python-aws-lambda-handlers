@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-npm ci
+npm install --silent
 npm run semantic-release
