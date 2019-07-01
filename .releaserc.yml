@@ -8,7 +8,7 @@ plugins:
     - changelogFile: CHANGELOG.md
   - - "@semantic-release/exec"
     - prepareCmd: |-
-        echo "__version__ = \'${nextRelease.version}\'" > lambda_handlers/version.py
+        echo "__version__ = '${nextRelease.version}'" > lambda_handlers/version.py
   - - "@semantic-release/git"
     - assets:
         - "lambda_handlers/version.py"
