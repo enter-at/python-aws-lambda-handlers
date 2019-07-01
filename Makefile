@@ -99,4 +99,4 @@ tag: clean
 pypi:
 	twine upload dist/*
 
-release: clean build tag pypi
+release: clean build pypi

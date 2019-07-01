@@ -19,11 +19,3 @@ deploy:
     script: ci-scripts/release.sh
     on:
       branch: master
-  - provider: pypi
-    distributions: sdist bdist_wheel
-    user: $PYPI_USER
-    password: $PYPI_PASS
-    on:
-      tags: true
-      python: "3.7"
-      repo: enter-at/lambda-handlers
