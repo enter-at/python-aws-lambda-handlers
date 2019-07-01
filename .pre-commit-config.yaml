@@ -10,9 +10,7 @@ repos:
       - id: check-json
       - id: check-yaml
       - id: detect-private-key
-      - id: detect-aws-credentials
       - id: double-quote-string-fixer
-      - id: requirements-txt-fixer
       - id: trailing-whitespace
       - id: no-commit-to-branch # No (direct) commits to master
   - repo: https://github.com/asottile/add-trailing-comma
