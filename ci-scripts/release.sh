@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 parse_environment_variables() {
-    TWINE_USERNAME=${PYPI_USER:?'PYPI_USER variable missing.'}
-    TWINE_PASSWORD=${PYPI_PASS:?'PYPI_PASS variable missing.'}
+    export TWINE_USERNAME=${PYPI_USER:?'PYPI_USER variable missing.'}
+    export TWINE_PASSWORD=${PYPI_PASS:?'PYPI_PASS variable missing.'}
 }
 
 semantic_release() {
