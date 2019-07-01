@@ -7,3 +7,75 @@
 
 An opinionated Python package that facilitates specifying AWS Lambda handlers including input validation, error handling and response formatting.
 
+## Dependencies
+
+This project uses [pipenv](https://pipenv.readthedocs.io) to manage its dependencies
+and Python environment. You can install it by:
+
+```bash
+pip install --user pipenv
+```
+
+We recommend using a Python virtual environment for each separate project you do.
+For that, we suggest using [pyenv](https://github.com/pyenv/pyenv-installer).
+
+## Installation
+
+For production, after you clone this repository,
+you can install this project plus dependencies with:
+
+```bash
+cd <clone_dest>
+make install
+```
+
+## Development
+
+For development you should also install the development dependencies,
+so run instead:
+
+```bash
+cd <clone_dest>
+make install-dev
+```
+
+This will install all dependencies and this project in development mode.
+
+
+### Testing
+
+We use [tox](https://tox.readthedocs.io/en/latest/) to run the code checkers.
+Run it with:
+
+```bash
+tox
+```
+
+You can also run the tasks separately with `make`:
+
+```bash
+make test
+```
+
+will run the unit tests,
+
+
+```bash
+make lint
+```
+
+will run a linter,
+
+```bash
+make mypy
+```
+
+will run the static type checker, and
+
+
+```bash
+make isort-check
+```
+
+will run the import order checker.
+
