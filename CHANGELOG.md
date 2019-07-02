@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/enter-at/lambda-handlers/compare/v1.0.0...v1.0.1) (2019-07-02)
+
+
+### Bug Fixes
+
+* **makefile:** remove tag target ([aefe5a6](https://github.com/enter-at/lambda-handlers/commit/aefe5a6))
+
 # 1.0.0 (2019-07-01)
 
 
