@@ -5,3 +5,7 @@ plugins:
     enabled: true
   git-legal:
     enabled: true
+
+exclude_patterns:
+  - node_modules/**
+  - package-lock.json
