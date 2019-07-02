@@ -16,10 +16,10 @@ pypi_release() {
 
 parse_environment_variables
 
-local current_tag=$(git describe --tags)
+current_tag=$(git describe --tags)
 semantic_release
 
-local new_tag=$(git describe --tags)
+new_tag=$(git describe --tags)
 if [ current_tag != new_tag ]; then
     pypi_release
 fi
