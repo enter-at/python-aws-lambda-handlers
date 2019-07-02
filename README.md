@@ -1,6 +1,6 @@
 # lambda-handlers
 
-[![Version](https://img.shields.io/pypi/v/lambda-handlers.svg)](https://img.shields.io/pypi/dd/lambda-handlers.svg)
+[![Version](https://img.shields.io/pypi/v/lambda-handlers.svg)](https://img.shields.io/pypi/v/lambda-handlers.svg)
 [![Build Status](https://travis-ci.org/enter-at/lambda-handlers.svg?branch=master)](https://travis-ci.org/enter-at/lambda-handlers)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a39e55b85bfcc31204b9/maintainability)](https://codeclimate.com/github/enter-at/lambda-handlers/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a39e55b85bfcc31204b9/test_coverage)](https://codeclimate.com/github/enter-at/lambda-handlers/test_coverage)
