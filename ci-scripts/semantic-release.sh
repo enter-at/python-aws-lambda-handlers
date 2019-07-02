@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-semantic_release() {
-    npm install --silent
-    npm run semantic-release
-}
+SCRIPT_PATH=$(dirname "$0")
+source "${SCRIPT_PATH}"/common.sh
 
+enable_debug
+npm install
 ls -la
+npm run semantic-release
 semantic_release
