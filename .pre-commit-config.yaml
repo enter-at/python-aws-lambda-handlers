@@ -39,7 +39,7 @@ repos:
         entry: tox -e mypy
         language: system
         types: [python]
-      - id: test
+      - id: tests
         name: tox tests
         entry: tox -e tests
         language: system
