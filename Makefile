@@ -1,4 +1,4 @@
-.PHONY: help clean clean-pyc clean-build list test test-dbg test-cov test-all coverage docs release sdist install install-dev install-ci buil tag lint mypy isort isort-check
+.PHONY: help clean clean-pyc clean-build list test test-dbg test-cov test-all coverage docs release sdist install install-dev install-ci lint mypy isort isort-check
 
 project-name = lambda_handlers
 
@@ -56,7 +56,7 @@ clean-pyc:
 	find . -name '*.egg-info' -exec rm -rf {} +
 
 clean-tox:
-	rm -rf .tox/
+	rm -rf .tox
 
 lint:
 	tox -e lint
