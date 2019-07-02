@@ -16,6 +16,6 @@ script:
   - tox -e tests
 deploy:
   - provider: script
-    script: ci-scripts/release.sh
+    script: ci-scripts/semantic-release.sh
     on:
       branch: master
