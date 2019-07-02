@@ -22,10 +22,8 @@ help:
 	@echo "mypy - check type hinting with mypy"
 	@echo "isort - sort imports"
 	@echo "isort-check - check if your imports are correctly sorted"
-	@echo "tag - create a git tag with current version"
 	@echo "build - create the distribution package"
 	@echo "release - package a release in wheel and tarball, requires twine"
-	@echo "tag - create a git tag with current version"
 
 install:
 	pip install pipenv
@@ -90,11 +88,6 @@ coverage:
 
 build:
 	python setup.py sdist bdist_wheel
-
-tag: clean
-	@echo "Creating git tag v$(version)"
-	git tag v$(version)
-	git push --tags
 
 pypi:
 	twine upload dist/*
