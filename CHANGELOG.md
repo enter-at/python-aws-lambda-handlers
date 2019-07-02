@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/enter-at/lambda-handlers/compare/v1.0.2...v1.0.3) (2019-07-02)
+
+
+### Bug Fixes
+
+* **setup.cfg:** add missing packaging setting ([6cb71dc](https://github.com/enter-at/lambda-handlers/commit/6cb71dc))
+
 ## [1.0.2](https://github.com/enter-at/lambda-handlers/compare/v1.0.1...v1.0.2) (2019-07-02)
 
 
