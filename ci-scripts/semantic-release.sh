@@ -5,4 +5,5 @@ semantic_release() {
     npm run semantic-release
 }
 
+ls -la
 semantic_release
