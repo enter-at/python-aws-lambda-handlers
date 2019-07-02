@@ -27,10 +27,10 @@ logger = logging.getLogger(__name__)
 class HTTPHandler(LambdaHandler):
     """
     Decorator class to facilitate the definition of AWS HTTP Lambda handlers with:
-       - input validation,
-       - output formatting,
-       - CORS headers, and
-       - error handling.
+        - input validation,
+        - output formatting,
+        - CORS headers, and
+        - error handling.
 
     Parameters
     ----------
