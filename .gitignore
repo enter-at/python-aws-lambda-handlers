@@ -38,6 +38,7 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+cc-test-reporter
 
 # pyenv
 .python-version
