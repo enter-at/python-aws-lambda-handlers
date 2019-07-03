@@ -16,7 +16,7 @@ class MarshmallowValidator(Validator):
     def validate(
         self,
         instance: Any,
-        schema: marshmallow.Schema,
+        schema: 'marshmallow.Schema',
     ) -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
 
         if not marshmallow:
