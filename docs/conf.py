@@ -15,11 +15,7 @@ import os
 import sys
 
 import lambda_handlers
-
-# from recommonmark.transform import AutoStructify
-
-sys.path.insert(0, os.path.abspath('..'))
-
+from recommonmark.transform import AutoStructify
 
 # -- Project information -----------------------------------------------------
 
@@ -80,9 +76,11 @@ html_static_path = ['_static']
 autosectionlabel_prefix_document = True
 
 
-# def setup(app):
-#     app.add_config_value('lambda_handlers_config', {
-#         'auto_toc_tree_section': 'Contents',
-#         'enable_eval_rst': True,
-#     }, True)
-#     app.add_transform(AutoStructify)
+def setup(app):
+    app.add_config_value(
+        'lambda_handlers_config', {
+            'auto_toc_tree_section': 'Contents',
+            'enable_eval_rst': True,
+        }, True,
+    )
+    app.add_transform(AutoStructify)
