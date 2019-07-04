@@ -73,6 +73,8 @@ def handler(event, context):
 Using jsonschema to validate a the input of a User model.
 
 ```python
+from typing import Dict, Any
+
 from lambda_handler import validators, http_handler
 
 user_schema: Dict[str, Any] = {
