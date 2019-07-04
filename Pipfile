@@ -3,8 +3,10 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[packages]
+
+
 [dev-packages]
-sphinx = "*"
 flake8 = "*"
 flake8-bugbear = "*"
 autopep8 = "*"
@@ -19,8 +21,8 @@ isort = "*"
 tox = ">=3.13.2"
 coverage = "*"
 wily = "*"
-jsonschema = "*"
-marshmallow = "*"
+jsonschema = "==3.0.1"
+marshmallow = "==2.19.5"
 pyclean-py = "*"
 pytest-mock = "*"
 rope = "*"
