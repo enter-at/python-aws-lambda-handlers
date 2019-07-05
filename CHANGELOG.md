@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/enter-at/lambda-handlers/compare/v1.0.4...v1.0.5) (2019-07-05)
+
+
+### Bug Fixes
+
+* **docs:** fix docs build setup to import lambda_handlers ([56f6441](https://github.com/enter-at/lambda-handlers/commit/56f6441))
+
 ## [1.0.4](https://github.com/enter-at/lambda-handlers/compare/v1.0.3...v1.0.4) (2019-07-03)
 
 
