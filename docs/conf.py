@@ -14,8 +14,13 @@
 import os
 import sys
 
-import lambda_handlers
 from recommonmark.transform import AutoStructify
+
+here = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(here))
+
+import lambda_handlers # noqa # isort:skip
+
 
 # -- Project information -----------------------------------------------------
 
