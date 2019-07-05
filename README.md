@@ -5,6 +5,7 @@
 [![](https://api.codeclimate.com/v1/badges/a39e55b85bfcc31204b9/maintainability)](https://codeclimate.com/github/enter-at/lambda-handlers/maintainability)
 [![](https://api.codeclimate.com/v1/badges/a39e55b85bfcc31204b9/test_coverage)](https://codeclimate.com/github/enter-at/lambda-handlers/test_coverage)
 [![](https://requires.io/github/enter-at/lambda-handlers/requirements.svg?branch=master)](https://requires.io/github/enter-at/lambda-handlers/requirements/?branch=master)
+[![](https://readthedocs.org/projects/lambda-handlers/badge/?version=latest)](https://lambda-handlers.readthedocs.io/en/latest/?badge=latest)
 [![](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
