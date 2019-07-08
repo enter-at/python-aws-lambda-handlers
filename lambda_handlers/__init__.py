@@ -1,13 +1,13 @@
-from .types import APIGatewayProxyResult  # noqa
-from .errors import (  # noqa
+from lambda_handlers.types import APIGatewayProxyResult  # noqa
+from lambda_handlers.errors import (  # noqa
     LambdaError,
     NotFoundError,
     ForbiddenError,
     BadRequestError,
     InternalServerError,
 )
-from .version import __version__  # noqa
-from .handlers import HTTPHandler, LambdaHandler, http_handler  # noqa
-from .response import cors_headers, response_builder  # noqa
-from .formatters import input_format, output_format  # noqa
-from .validators import jsonschema, marshmallow  # noqa
+from lambda_handlers.version import __version__  # noqa
+from lambda_handlers.handlers import HTTPHandler, LambdaHandler  # noqa
+from lambda_handlers.response import cors_headers, response_builder  # noqa
+from lambda_handlers.formatters import input_format, output_format  # noqa
+from lambda_handlers.validators import jsonschema, marshmallow  # noqa

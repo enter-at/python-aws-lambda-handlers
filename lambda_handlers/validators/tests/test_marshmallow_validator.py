@@ -4,7 +4,7 @@ import pytest
 from marshmallow import Schema, ValidationError, fields, validates_schema
 from marshmallow.validate import Range
 
-from lambda_handlers.validators import Validator
+from lambda_handlers.validators.validator import Validator
 from lambda_handlers.validators.marshmallow_validator import (
     MarshmallowValidator,
 )

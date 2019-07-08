@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Tuple, Union
 
 from lambda_handlers.errors import LambdaError
-from lambda_handlers.validators import Validator
+from lambda_handlers.validators.validator import Validator
 
 try:
     import marshmallow
@@ -32,9 +32,9 @@ class MarshmallowValidator(Validator):
 
         exception = marshmallow.ValidationError(errors)
         field_errors = exception.normalized_messages(no_field_name=NO_FIELD_NAME)
-        is_empty = NO_FIELD_NAME in field_errors and not field_errors[NO_FIELD_NAME] and len(field_errors) == 1
 
-        if is_empty:
-            return []
+        if NO_FIELD_NAME in field_errors and len(field_errors) == 1:
+            entry = field_errors[NO_FIELD_NAME]
+            return entry or []
 
         return [{field: errors} for field, errors in field_errors.items()]

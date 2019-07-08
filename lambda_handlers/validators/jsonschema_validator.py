@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Tuple, Union
 from collections import defaultdict
 
 from lambda_handlers.errors import LambdaError
-from lambda_handlers.validators import Validator
+from lambda_handlers.validators.validator import Validator
 
 try:
     import jsonschema

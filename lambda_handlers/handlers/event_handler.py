@@ -1,5 +1,5 @@
 from lambda_handlers import formatters
-from lambda_handlers.validators import Validator
+from lambda_handlers.validators.validator import Validator
 from lambda_handlers.handlers.lambda_handler import LambdaHandler
 from lambda_handlers.handlers.mixins.formatting_mixin import FormattingMixin
 from lambda_handlers.handlers.mixins.validation_mixin import ValidationMixin

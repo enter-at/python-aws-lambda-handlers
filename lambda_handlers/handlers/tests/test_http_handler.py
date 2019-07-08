@@ -120,7 +120,7 @@ class TestHTTPHandlerCustomMarshmallowValidator:
             statusCode = fields.Integer(required=True)
 
         @http_handler(
-            validator=validators.marshmallow(
+            validator=validators.http.marshmallow(
                 body=UserSchema(),
                 response=ResponseSchema(),
             ),
