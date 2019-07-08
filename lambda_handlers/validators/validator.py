@@ -2,10 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Tuple, Union, Callable
 from collections import defaultdict
 
-from lambda_handlers.errors import (
-    RequestValidationError,
-    ResponseValidationError,
-)
+from lambda_handlers.errors import EventValidationError, ResultValidationError
 
 
 class Validator(ABC):
@@ -24,31 +21,31 @@ class Validator(ABC):
         self._query_string_parameters_schema = query
         self._body_schema = body
 
-    def validate_request(self, event, context) -> Tuple[Any, Any]:
+    def validate_event(self, event, context) -> Tuple[Any, Any]:
         if self._request_schema:
             data, errors = self.validate(event, self._request_schema)
 
             if errors:
                 description = self.format_errors(errors)
-                raise RequestValidationError(description)
+                raise EventValidationError(description)
 
             return data, context
 
-        return self._validate_request_contexts(event, context)
+        return self._validate_event_contexts(event, context)
 
-    def validate_response(self, response: Dict[str, Any]) -> Dict[str, Any]:
+    def validate_result(self, result: Dict[str, Any]) -> Dict[str, Any]:
         if not self._response_schema:
-            return response
+            return result
 
-        data, errors = self.validate(response, self._response_schema)
+        data, errors = self.validate(result, self._response_schema)
 
         if errors:
             description = self.format_errors(errors)
-            raise ResponseValidationError(description)
+            raise ResultValidationError(description)
 
         return data
 
-    def _validate_request_contexts(
+    def _validate_event_contexts(
         self,
         event,
         context,
@@ -66,7 +63,7 @@ class Validator(ABC):
         )
 
         if errors:
-            raise RequestValidationError(
+            raise EventValidationError(
                 [{key: self.format_errors(error)} for key, error in errors.items()],
             )
 

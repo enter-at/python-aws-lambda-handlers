@@ -57,7 +57,7 @@ class TestHTTPHandlerCustomBodyFormat:
     @pytest.fixture
     def handler(self):
         @http_handler(
-            body_format=PipeFormatter.parse,
+            input_format=PipeFormatter.parse,
         )
         def handler(event, context):
             return event['body']
@@ -120,7 +120,7 @@ class TestHTTPHandlerCustomMarshmallowValidator:
             statusCode = fields.Integer(required=True)
 
         @http_handler(
-            validation=validators.marshmallow(
+            validator=validators.marshmallow(
                 body=UserSchema(),
                 response=ResponseSchema(),
             ),

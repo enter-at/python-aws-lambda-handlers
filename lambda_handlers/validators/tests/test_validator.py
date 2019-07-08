@@ -4,10 +4,7 @@ from collections import defaultdict
 
 import pytest
 
-from lambda_handlers.errors import (
-    RequestValidationError,
-    ResponseValidationError,
-)
+from lambda_handlers.errors import EventValidationError, ResultValidationError
 from lambda_handlers.validators import Validator
 
 
@@ -58,17 +55,17 @@ class TestValidatorWithoutSchema:
     def subject(self):
         return SimpleSchemaValidator()
 
-    def test_validate_request(self, subject, mocker):
+    def test_validate_event(self, subject, mocker):
         event = {}
         context = {}
         validate_spy = mocker.spy(subject, 'validate')
-        assert (event, context) == subject.validate_request(event, context)
+        assert (event, context) == subject.validate_event(event, context)
         assert validate_spy.call_count == 0
 
-    def test_validate_response(self, subject, mocker):
+    def test_validate_result(self, subject, mocker):
         response = {}
         validate_spy = mocker.spy(subject, 'validate')
-        assert response == subject.validate_response(response)
+        assert response == subject.validate_result(response)
         assert validate_spy.call_count == 0
 
 
@@ -90,8 +87,8 @@ class TestValidatorWithRequestSchema:
             'comment': 'some comment',
         }
         context = {}
-        with not_raises(RequestValidationError):
-            subject.validate_request(event, context)
+        with not_raises(EventValidationError):
+            subject.validate_event(event, context)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -99,8 +96,8 @@ class TestValidatorWithRequestSchema:
         }
         context = {}
 
-        with pytest.raises(RequestValidationError) as error:
-            subject.validate_request(event, context)
+        with pytest.raises(EventValidationError) as error:
+            subject.validate_event(event, context)
 
         assert isinstance(error.value.description, list)
         assert len(error.value.description) == 3
@@ -119,21 +116,21 @@ class TestValidatorWithResponseSchema:
         }
         return SimpleSchemaValidator(response=schema)
 
-    def test_validate_response(self, subject):
+    def test_validate_result(self, subject):
         response = {
             'user': {'name': 'Peter Baker'},
             'accountable': False,
         }
-        with not_raises(ResponseValidationError):
-            assert subject.validate_response(response) == response
+        with not_raises(ResultValidationError):
+            assert subject.validate_result(response) == response
 
     def test_validate_invalid_response(self, subject):
         response = {
             'user': 12,
         }
 
-        with pytest.raises(ResponseValidationError) as error:
-            subject.validate_response(response)
+        with pytest.raises(ResultValidationError) as error:
+            subject.validate_result(response)
 
         assert isinstance(error.value.description, list)
         assert len(error.value.description) == 2
@@ -159,8 +156,8 @@ class TestValidatorWithPathParametersSchema:
             },
         }
         context = {}
-        with not_raises(RequestValidationError):
-            subject.validate_request(event, context)
+        with not_raises(EventValidationError):
+            subject.validate_event(event, context)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -170,8 +167,8 @@ class TestValidatorWithPathParametersSchema:
         }
         context = {}
 
-        with pytest.raises(RequestValidationError) as error:
-            subject.validate_request(event, context)
+        with pytest.raises(EventValidationError) as error:
+            subject.validate_event(event, context)
 
         nested_errors = error.value.description
         assert isinstance(nested_errors, list)
@@ -209,8 +206,8 @@ class TestValidatorWithPathParametersSchemaAndQueryStringParametersSchema:
             },
         }
         context = {}
-        with not_raises(RequestValidationError):
-            subject.validate_request(event, context)
+        with not_raises(EventValidationError):
+            subject.validate_event(event, context)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -223,8 +220,8 @@ class TestValidatorWithPathParametersSchemaAndQueryStringParametersSchema:
         }
         context = {}
 
-        with pytest.raises(RequestValidationError) as error:
-            subject.validate_request(event, context)
+        with pytest.raises(EventValidationError) as error:
+            subject.validate_event(event, context)
 
         nested_errors = error.value.description
         assert isinstance(nested_errors, list)
@@ -278,8 +275,8 @@ class TestValidatorWithPathParametersSchemaAndQueryStringParametersSchemaAndBody
             },
         }
         context = {}
-        with not_raises(RequestValidationError):
-            subject.validate_request(event, context)
+        with not_raises(EventValidationError):
+            subject.validate_event(event, context)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -292,8 +289,8 @@ class TestValidatorWithPathParametersSchemaAndQueryStringParametersSchemaAndBody
         }
         context = {}
 
-        with pytest.raises(RequestValidationError) as error:
-            subject.validate_request(event, context)
+        with pytest.raises(EventValidationError) as error:
+            subject.validate_event(event, context)
 
         nested_errors = error.value.description
         assert isinstance(nested_errors, list)
@@ -338,8 +335,8 @@ class TestValidatorWithRequestSchemaAndPathParametersSchema:
             'accountable': True,
         }
         context = {}
-        with not_raises(RequestValidationError):
-            subject.validate_request(event, context)
+        with not_raises(EventValidationError):
+            subject.validate_event(event, context)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -347,8 +344,8 @@ class TestValidatorWithRequestSchemaAndPathParametersSchema:
         }
         context = {}
 
-        with pytest.raises(RequestValidationError) as error:
-            subject.validate_request(event, context)
+        with pytest.raises(EventValidationError) as error:
+            subject.validate_event(event, context)
 
         assert isinstance(error.value.description, list)
         assert len(error.value.description) == 2
