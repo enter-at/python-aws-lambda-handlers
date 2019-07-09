@@ -18,6 +18,7 @@ from recommonmark.transform import AutoStructify
 
 here = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(here))
+# sys.path.insert(0, os.path.abspath('../'))
 
 import lambda_handlers # noqa # isort:skip
 
@@ -27,7 +28,7 @@ import lambda_handlers # noqa # isort:skip
 project = 'lambda-handlers'
 copyright = '2019, Steffen Leistner, Alexandre Savio'
 author = 'Steffen Leistner, Alexandre Savio'
-
+language = None
 
 # -- General configuration ---------------------------------------------------
 
@@ -37,6 +38,8 @@ author = 'Steffen Leistner, Alexandre Savio'
 extensions = [
     'recommonmark',
     'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.autosummary',
     'sphinx.ext.autosectionlabel',
 ]
 
@@ -51,9 +54,12 @@ master_doc = 'index'
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+github_root = 'https://github.com/enter-at/lambda-handlers/tree'
 
-github_doc_root = 'https://github.com/enter-at/lambda-handlers/tree/master/docs/'
+github_doc_root = f'{github_root}/master/docs/'
 
+# The name of the Pygments (syntax highlighting) style to use.
+pygments_style = 'sphinx'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -63,6 +69,15 @@ github_doc_root = 'https://github.com/enter-at/lambda-handlers/tree/master/docs/
 version = lambda_handlers.__version__
 # The full version, including alpha/beta/rc tagss
 release = lambda_handlers.__version__
+
+# -- Options for Autodoc -------------------------------------------------
+autoclass_content = 'class'
+
+autodoc_member_order = 'bysource'
+
+autodoc_mock_imports = ['marshmallow', 'jsonschema']
+
+autosummary_generate = True
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -81,11 +96,60 @@ html_static_path = ['_static']
 autosectionlabel_prefix_document = True
 
 
+# -- Options for manual page output ---------------------------------------
+
+# One entry per manual page. List of tuples
+# (source start file, name, description, authors, manual section).
+man_pages = [
+    (
+        master_doc,
+        'lambda-handlers',
+        'Lambda-Handlers Documentation',
+        [author],
+        1,
+    ),
+]
+
+# If true, show URL addresses after external links.
+# man_show_urls = False
+
+
+# -- Options for Texinfo output -------------------------------------------
+
+# Grouping the document tree into Texinfo files. List of tuples
+# (source start file, target name, title, author,
+#  dir menu entry, description, category)
+texinfo_documents = [
+    (
+        master_doc,
+        'lambda-handlers',
+        'Lambda-Handlers Documentation',
+        author,
+        'Lambda-Handlers',
+        'An opinionated Python package that facilitates specifying AWS Lambda handlers.',
+        'Miscellaneous',
+    ),
+]
+
+# Documents to append as an appendix to all manuals.
+# texinfo_appendices = []
+
+# If false, no module index is generated.
+# texinfo_domain_indices = True
+
+# How to display URL addresses: 'footnote', 'no', or 'inline'.
+# texinfo_show_urls = 'footnote'
+
+# If true, do not generate a @detailmenu in the "Top" node's menu.
+# texinfo_no_detailmenu = False
+
+
 def setup(app):
     app.add_config_value(
         'lambda_handlers_config', {
             'auto_toc_tree_section': 'Contents',
             'enable_eval_rst': True,
+            'enable_auto_doc_ref': True,
         }, True,
     )
     app.add_transform(AutoStructify)
