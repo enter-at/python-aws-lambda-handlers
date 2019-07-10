@@ -37,6 +37,7 @@ language = None
 # ones.
 extensions = [
     'recommonmark',
+    'sphinx.ext.apidoc',
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
@@ -70,6 +71,16 @@ pygments_style = 'sphinx'
 version = lambda_handlers.__version__
 # The full version, including alpha/beta/rc tagss
 release = lambda_handlers.__version__
+
+# -- Options for Apidoc --------------------------------------------------
+
+apidoc_module_dir = lambda_handlers.__path__[0]
+
+apidoc_output_dir = 'source'
+
+apidoc_excluded_paths = ['tests']
+
+apidoc_separate_modules = True
 
 # -- Options for Autodoc -------------------------------------------------
 autoclass_content = 'class'
