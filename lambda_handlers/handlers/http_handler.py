@@ -34,15 +34,18 @@ class HTTPHandler(EventHandler):
     ----------
     cors: lambda_decorator.response.CorsHeaders
         Definition of the CORS headers.
+        Default: CorsHeaders(origin='*', credentials=True).
 
-    input_format: Callable
-        Formatter callable to parse the input body.
+    input_format: Callable, optional
+        Formatter callable to parse the input event.
+        Default:  formatters.input_format.json.
 
-    output_format: Callable
+    output_format: Callable, optional
         Formatter callable to format the output body from the return value of the handler function.
+        Default:  formatters.output_format.json.
 
-    validation:
-        A callable or schema definition to validate: body, pathParameters, queryParameters, and response.
+    validator: Callable, optional
+        A callable or schema definition to validate: event, and result.
     """
 
     def __init__(self, cors=None, input_format=None, output_format=None, validator=None):

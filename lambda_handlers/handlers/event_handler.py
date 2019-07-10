@@ -13,14 +13,16 @@ class EventHandler(LambdaHandler, ValidationMixin, FormattingMixin):
 
     Parameters
     ----------
-    input_format: Callable
+    input_format: Callable, optional
         Formatter callable to parse the input event.
+        Default:  formatters.input_format.json.
 
-    output_format: Callable
+    output_format: Callable, optional
         Formatter callable to format the output body from the return value of the handler function.
+        Default:  formatters.output_format.json.
 
-    validator:
-        A callable or schema definition to validate: event, and resulr.
+    validator: Callable, optional
+        A callable or schema definition to validate: event, and result.
     """
 
     def __init__(self, input_format=None, output_format=None, validator=None):
@@ -29,7 +31,7 @@ class EventHandler(LambdaHandler, ValidationMixin, FormattingMixin):
         self._output_format = output_format or formatters.output_format.json
 
     @property
-    def validator(self):
+    def validator(self) -> Validator:
         return self._validator
 
     def before(self, event, context):
