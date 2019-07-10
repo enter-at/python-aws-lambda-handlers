@@ -21,6 +21,7 @@ before_script:
 
 script:
 - tox -e lint
+- tox -e doclint
 - tox -e isort
 - tox -e mypy
 - tox -e tests
