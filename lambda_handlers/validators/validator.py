@@ -70,10 +70,10 @@ class Validator(ABC):
             data, errors = self.validate(target.get(key, {}), schema)
             if errors:
                 entry = cumulative_errors[key]
-                if isinstance(errors, list):
-                    entry.extend(errors)
-                else:
-                    entry.append(errors)
+                if not isinstance(errors, list):
+                    errors = [errors]
+                entry.extend(errors)
+
             elif key in target:
                 transformed_data[key] = data
 
