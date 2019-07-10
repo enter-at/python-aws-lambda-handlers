@@ -1,13 +1,6 @@
 lambda\_handlers.validators package
 ===================================
 
-Subpackages
------------
-
-.. toctree::
-
-   lambda_handlers.validators.tests
-
 Submodules
 ----------
 

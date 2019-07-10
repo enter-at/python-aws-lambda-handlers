@@ -1,13 +1,6 @@
 lambda\_handlers.handlers package
 =================================
 
-Subpackages
------------
-
-.. toctree::
-
-   lambda_handlers.handlers.tests
-
 Submodules
 ----------
 

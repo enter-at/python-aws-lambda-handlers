@@ -1,13 +1,6 @@
 lambda\_handlers.response package
 =================================
 
-Subpackages
------------
-
-.. toctree::
-
-   lambda_handlers.response.tests
-
 Submodules
 ----------
 

@@ -1,13 +1,6 @@
 lambda\_handlers.formatters package
 ===================================
 
-Subpackages
------------
-
-.. toctree::
-
-   lambda_handlers.formatters.tests
-
 Submodules
 ----------
 
