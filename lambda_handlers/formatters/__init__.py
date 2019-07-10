@@ -1,5 +1,5 @@
-from . import json_formatter
-from ..errors import FormattingError  # noqa
+from lambda_handlers.errors import FormattingError  # noqa
+from lambda_handlers.formatters import json_formatter
 
 
 class InputFormat:

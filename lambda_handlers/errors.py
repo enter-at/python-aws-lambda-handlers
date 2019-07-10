@@ -27,9 +27,9 @@ class FormattingError(LambdaError):
     pass
 
 
-class RequestValidationError(ValidationError):
+class EventValidationError(ValidationError):
     pass
 
 
-class ResponseValidationError(ValidationError):
+class ResultValidationError(ValidationError):
     pass

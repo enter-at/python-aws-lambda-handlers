@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 import pytest
 
-from lambda_handlers.validators import Validator
+from lambda_handlers.validators.validator import Validator
 from lambda_handlers.validators.jsonschema_validator import JSONSchemaValidator
 
 
