@@ -1,5 +1,5 @@
-# Configuration file for the Sphinx documentation builder.
-#
+"""Configuration file for the Sphinx documentation builder."""
+
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
 # http://www.sphinx-doc.org/en/master/config
@@ -38,6 +38,7 @@ language = None
 extensions = [
     'recommonmark',
     'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
     'sphinx.ext.autosectionlabel',
@@ -145,6 +146,7 @@ texinfo_documents = [
 
 
 def setup(app):
+    """Configure recommonmark.AutoStructify."""
     app.add_config_value(
         'lambda_handlers_config', {
             'auto_toc_tree_section': 'Contents',

@@ -5,4 +5,4 @@ source "${SCRIPT_PATH}"/common.sh
 
 version=$1
 echo "new version ${version}"
-echo "__version__ = '${version}'" >lambda_handlers/version.py
+echo "\"\"\"Release version number.\"\"\"\n__version__ = '${version}'  # noqa" >> lambda_handlers/version.py

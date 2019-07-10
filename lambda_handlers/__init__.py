@@ -1,3 +1,5 @@
+"""AWS Lambda handler decorators for formatting, validation, and response handling."""
+
 from .types import APIGatewayProxyResult  # noqa
 from .errors import (  # noqa
     LambdaError,
