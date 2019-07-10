@@ -61,6 +61,3 @@ class TestValidatorWithPathParametersSchema:
             errors['pathParameters'] for errors in nested_errors if 'pathParameters' in errors
         )
         assert isinstance(path_parameters_errors, list)
-        # assert 'user_name' in path_parameters_errors
-        # assert path_parameters_errors['user_name'] == ['Not a valid string.']
-        # assert {'accountable': ['missing']} in path_parameters_errors
