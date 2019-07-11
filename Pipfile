@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 
-
 [dev-packages]
 flake8 = "*"
 flake8-bugbear = "*"
@@ -27,3 +26,4 @@ pyclean-py = "*"
 pytest-mock = "*"
 rope = "*"
 twine = "*"
+pydocstyle = "*"

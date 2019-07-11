@@ -1,4 +1,5 @@
 ---
+fail_fast: true
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.2.1
@@ -28,6 +29,13 @@ repos:
         files: \.md$
       - id: remove-crlf
         files: \.md$
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: 4.0.0
+    hooks:
+    - id: pydocstyle
+      args:
+      - --match-dir=lambda_handlers
+      - --convention=numpy
   - repo: local
     hooks:
       - id: lint

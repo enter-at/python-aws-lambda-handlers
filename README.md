@@ -8,15 +8,18 @@
 [![](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![](https://badges.renovateapi.com/github/enter-at/lambda-handlers)](https://renovatebot.com/)
 
-
 An opinionated Python package that facilitates specifying AWS Lambda handlers.
 
 It includes input validation, error handling and response formatting.
 
+## Contents
+
+* [Validators](validators.md)
+* [API Reference](source/modules)
 
 ## Getting started
 
-To use `lambda-handlers` you must first install it:
+Install `lambda-handlers` with:
 
 ```bash
 pip install lambda-handlers
@@ -42,6 +45,7 @@ pip install 'lambda-handlers[jsonschema]'
 
 By default the `http_handler` decorator makes sure of parsing the request body
 as JSON, and also formats the response as JSON with:
+
    - an adequate statusCode,
    - CORS headers, and
    - the handler return value in the body.
@@ -53,7 +57,6 @@ from lambda_handler import http_handler
 def handler(event, context):
     return event['body']
 ```
-
 
 ### Examples
 
@@ -69,7 +72,6 @@ from lambda_handlers.response import cors
 def handler(event, context):
     return event['body']
 ```
-
 
 Using jsonschema to validate a the input of a User model.
 
@@ -93,7 +95,6 @@ def handler(event, context):
     user = event['body']
     return user
 ```
-
 
 Using Marshmallow to validate a User model in the input and in
 the response body.
@@ -124,8 +125,7 @@ def handler(event, context):
     return user
 ```
 
-
-## Development
+## Using the source code
 
 This project uses [pipenv](https://pipenv.readthedocs.io) to manage its dependencies
 and Python environment. You can install it by:
@@ -159,10 +159,8 @@ make install-dev
 
 This will install all dependencies and this project in development mode.
 
-
 ### Testing
 
 We use [tox](https://tox.readthedocs.io/en/latest/) to run the code checkers.
 
 You can run the tests by running `tox` in the top-level of the project.
-
