@@ -1,18 +1,16 @@
 import logging
 from typing import Any, Dict
 
-from lambda_handlers import formatters
 from lambda_handlers.types import Headers, APIGatewayProxyResult
 from lambda_handlers.errors import (
     NotFoundError,
     BadRequestError,
     FormattingError,
     ValidationError,
-    ResponseValidationError,
+    ResultValidationError,
 )
 from lambda_handlers.response import CorsHeaders
-from lambda_handlers.validators import Validator
-from lambda_handlers.handlers.lambda_handler import LambdaHandler
+from lambda_handlers.handlers.event_handler import EventHandler
 from lambda_handlers.response.response_builder import (
     ok,
     not_found,
@@ -24,7 +22,7 @@ from lambda_handlers.response.response_builder import (
 logger = logging.getLogger(__name__)
 
 
-class HTTPHandler(LambdaHandler):
+class HTTPHandler(EventHandler):
     """
     Decorator class to facilitate the definition of AWS HTTP Lambda handlers with:
         - input validation,
@@ -36,61 +34,47 @@ class HTTPHandler(LambdaHandler):
     ----------
     cors: lambda_decorator.response.CorsHeaders
         Definition of the CORS headers.
+        Default: CorsHeaders(origin='*', credentials=True).
 
-    body_format: Callable
-        Formatter callable to parse the input body.
+    input_format: Callable, optional
+        Formatter callable to parse the input event.
+        Default:  formatters.input_format.json.
 
-    output_format: Callable
+    output_format: Callable, optional
         Formatter callable to format the output body from the return value of the handler function.
+        Default:  formatters.output_format.json.
 
-    validation: TBD
-        A callable or schema definition to validate: body, pathParameters, queryParameters, and response.
+    validator: Callable, optional
+        A callable or schema definition to validate: event, and result.
     """
 
-    def __init__(self, cors=None, body_format=None, output_format=None, validation=None):
-        self._format_body = body_format or formatters.input_format.json
-        self._validator: Validator = validation
-        self._format_output = output_format or formatters.output_format.json
+    def __init__(self, cors=None, input_format=None, output_format=None, validator=None):
+        super().__init__(input_format=input_format, output_format=output_format, validator=validator)
         self._cors = cors or CorsHeaders(origin='*', credentials=True)
-
-    def before(self, event, context):
-        self._parse_body(event)
-        self._validate_request(event, context)
-        return event, context
 
     def after(self, result):
         if not isinstance(result, APIGatewayProxyResult) and 'statusCode' not in result:
             result = ok(result)
-        response = self._create_response(result)
-        return response
+        return self._create_response(result)
 
     def on_exception(self, exception):
         return self._create_response(self._handle_error(exception))
 
-    def _validate_request(self, event, context):
-        if self._validator:
-            transformed_event, transformed_context = self._validator.validate_request(event, context)
-            event.update(transformed_event)
-            if context is not None:
-                context.update(transformed_context)
-
-    def _validate_response(self, response: Dict[str, Any]) -> Dict[str, Any]:
-        if self._validator:
-            return self._validator.validate_response(response)
-        return response
-
-    def _parse_body(self, event):
+    def format_input(self, event):
         if 'body' in event:
             try:
-                event['body'] = self._format_body(event['body'])
+                event['body'] = self._input_format(event['body'])
             except FormattingError as error:
                 raise FormattingError([{'body': [error.description]}])
+        return event
+
+    def format_output(self, response):
+        response['body'] = self._output_format(response['body'])
+        return response
 
     def _create_response(self, result: APIGatewayProxyResult) -> Dict[str, Any]:
         result.headers = self._create_headers(result.headers)
-        response = self._validate_response(result.asdict())
-        response['body'] = self._format_output(response['body'])
-        return response
+        return self.format_output(self.validate_result(result.asdict()))
 
     def _create_headers(self, headers: Headers) -> Headers:
         if not headers:
@@ -104,7 +88,7 @@ class HTTPHandler(LambdaHandler):
     def _handle_error(self, error) -> APIGatewayProxyResult:
         if isinstance(error, NotFoundError):
             return not_found(error.description)
-        if isinstance(error, ResponseValidationError):
+        if isinstance(error, ResultValidationError):
             return bad_implementation(error.description)
         if isinstance(error, (BadRequestError, FormattingError, ValidationError)):
             return bad_request(error.description)

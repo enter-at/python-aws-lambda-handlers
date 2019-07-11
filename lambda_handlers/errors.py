@@ -44,13 +44,13 @@ class FormattingError(LambdaError):
     pass
 
 
-class RequestValidationError(ValidationError):
-    """Request validation error."""
+class EventValidationError(ValidationError):
+    """Event validation error."""
 
     pass
 
 
-class ResponseValidationError(ValidationError):
-    """Response validation error."""
+class ResultValidationError(ValidationError):
+    """Result validation error."""
 
     pass

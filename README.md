@@ -92,7 +92,7 @@ user_schema: Dict[str, Any] = {
 
 
 @http_handler(
-    validation=validators.jsonschema(body=user_schema),
+    validator=validators.jsonschema(body=user_schema),
 )
 def handler(event, context):
     user = event['body']
@@ -118,7 +118,7 @@ class ResponseSchema(Schema):
 
 
 @http_handler(
-    validation=validators.marshmallow(
+    validator=validators.marshmallow(
         body=UserSchema(),
         response=ResponseSchema(),
     ),
