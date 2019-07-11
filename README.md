@@ -14,9 +14,6 @@ It includes input validation, error handling and response formatting.
 
 ## Contents
 
-```eval_rst
-.. autosummary::
-```
 * [Validators](validators.md)
 * [API Reference](source/modules)
 
