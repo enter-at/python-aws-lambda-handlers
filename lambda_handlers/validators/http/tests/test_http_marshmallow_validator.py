@@ -6,7 +6,7 @@ from lambda_handlers.validators.http.http_validator import HttpValidator
 from lambda_handlers.validators.marshmallow_validator import (
     MarshmallowValidator,
 )
-from lambda_handlers.validators.http.marshmallow_validator import (
+from lambda_handlers.validators.http.http_marshmallow_validator import (
     HttpMarshmallowValidator,
 )
 

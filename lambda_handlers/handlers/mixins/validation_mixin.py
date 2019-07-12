@@ -1,8 +1,11 @@
+"""A mixin for event and result data validation."""
+
 from abc import abstractmethod
 from typing import Any, Dict
 
 
 class ValidationMixin:
+    """A mixin for event and result data validation."""
 
     @property
     @abstractmethod

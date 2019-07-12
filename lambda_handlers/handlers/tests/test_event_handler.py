@@ -1,6 +1,6 @@
 import pytest
 
-from lambda_handlers.errors import FormattingError
+from lambda_handlers.errors import FormatError
 from lambda_handlers.handlers import event_handler
 
 
@@ -18,5 +18,5 @@ class TestEventHandlerDefaults:
         assert response == '{"a": 1}'
 
     def test_invalid_body_validation(self, handler):
-        with pytest.raises(FormattingError, match='Unexpected type for JSON input'):
+        with pytest.raises(FormatError, match='Unexpected type for JSON input'):
             handler({}, None)

@@ -1,4 +1,5 @@
 from lambda_handlers import formatters
+from lambda_handlers.formatters import Format
 from lambda_handlers.validators.validator import Validator
 from lambda_handlers.handlers.lambda_handler import LambdaHandler
 from lambda_handlers.handlers.mixins.formatting_mixin import FormattingMixin
@@ -13,12 +14,12 @@ class EventHandler(LambdaHandler, ValidationMixin, FormattingMixin):
 
     Parameters
     ----------
-    input_format: Callable, optional
-        Formatter callable to parse the input event.
+    input_format: Format, optional
+        Format to parse the input event.
         Default:  formatters.input_format.json.
 
-    output_format: Callable, optional
-        Formatter callable to format the output body from the return value of the handler function.
+    output_format: Format, optional
+        Format to format the output body from the return value of the handler function.
         Default:  formatters.output_format.json.
 
     validator: Callable, optional
@@ -27,8 +28,8 @@ class EventHandler(LambdaHandler, ValidationMixin, FormattingMixin):
 
     def __init__(self, input_format=None, output_format=None, validator=None):
         self._validator: Validator = validator
-        self._input_format = input_format or formatters.input_format.json
-        self._output_format = output_format or formatters.output_format.json
+        self._input_format: Format = input_format or formatters.input_format.json
+        self._output_format: Format = output_format or formatters.output_format.json
 
     @property
     def validator(self) -> Validator:

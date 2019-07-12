@@ -1,9 +1,9 @@
 import pytest
 
-from lambda_handlers.response.cors_headers import CorsHeaders
+from lambda_handlers.response.cors_headers import CORSHeaders
 
 
-class TestCorsHeaders:
+class TestCORSHeaders:
 
     @pytest.mark.parametrize(
         'origin, credentials, expected',
@@ -42,5 +42,5 @@ class TestCorsHeaders:
         ],
     )
     def test_create_headers(self, origin, credentials, expected):
-        subject = CorsHeaders(origin=origin, credentials=credentials)
+        subject = CORSHeaders(origin=origin, credentials=credentials)
         assert subject.create_headers() == expected

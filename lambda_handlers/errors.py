@@ -38,7 +38,7 @@ class ValidationError(LambdaError):
     pass
 
 
-class FormattingError(LambdaError):
+class FormatError(LambdaError):
     """Formatting error."""
 
     pass
