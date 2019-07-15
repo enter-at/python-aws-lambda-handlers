@@ -2,7 +2,7 @@
 
 
 class FormattingMixin:
-    """A mixin to user Formatters."""
+    """A mixin to use Formatters."""
 
     def format_input(self, event):
         """Parse `event` and return the result."""
