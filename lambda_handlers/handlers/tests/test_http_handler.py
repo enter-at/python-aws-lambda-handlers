@@ -39,13 +39,13 @@ class TestHTTPHandlerDefaults:
         }
 
 
-@format('application/piped')
+@format('application/text+piped')
 def pipe_input(content):
     items = content.split('|')
     return dict(zip(items[::2], items[1::2]))
 
 
-@format('application/piped')
+@format('application/text+piped')
 def pipe_output(content):
     content_items = [
         item for pairs in list(content.items())
@@ -112,7 +112,7 @@ class TestHTTPHandlerCustomOutputFormat:
         assert response['body'] == 'user_id|peter'
 
         assert 'Content-Type' in response['headers']
-        assert response['headers']['Content-Type'] == 'application/piped'
+        assert response['headers']['Content-Type'] == 'application/text+piped'
 
 
 class TestHTTPHandlerCustomMarshmallowValidator:
