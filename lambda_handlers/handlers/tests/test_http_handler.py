@@ -4,6 +4,7 @@ from marshmallow import Schema, fields
 from lambda_handlers import validators
 from lambda_handlers.handlers import http_handler
 from lambda_handlers.response import cors
+from lambda_handlers.formatters.format import format
 
 
 class TestHTTPHandlerDefaults:
@@ -32,24 +33,25 @@ class TestHTTPHandlerDefaults:
         assert response['statusCode'] == 200
         assert response['body'] == '{"user_id": 12}'
         assert response['headers'] == {
+            'Content-Type': 'application/json',
             'Access-Control-Allow-Credentials': True,
             'Access-Control-Allow-Origin': '*',
         }
 
 
-class PipeFormatter:
-    @staticmethod
-    def parse(content):
-        items = content.split('|')
-        return dict(zip(items[::2], items[1::2]))
+@format('application/text+piped')
+def pipe_input(content):
+    items = content.split('|')
+    return dict(zip(items[::2], items[1::2]))
 
-    @staticmethod
-    def serialize(content):
-        content_items = [
-            item for pairs in list(content.items())
-            for item in pairs
-        ]
-        return '|'.join(content_items)
+
+@format('application/text+piped')
+def pipe_output(content):
+    content_items = [
+        item for pairs in list(content.items())
+        for item in pairs
+    ]
+    return '|'.join(content_items)
 
 
 class TestHTTPHandlerCustomBodyFormat:
@@ -57,7 +59,7 @@ class TestHTTPHandlerCustomBodyFormat:
     @pytest.fixture
     def handler(self):
         @http_handler(
-            input_format=PipeFormatter.parse,
+            input_format=pipe_input,
         )
         def handler(event, context):
             return event['body']
@@ -86,7 +88,10 @@ class TestHTTPHandlerCORS:
         response = handler({}, None)
         assert isinstance(response, dict)
         assert response['statusCode'] == 200
-        assert response['headers'] == {'Access-Control-Allow-Origin': 'localhost'}
+        assert response['headers'] == {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'localhost',
+        }
 
 
 class TestHTTPHandlerCustomOutputFormat:
@@ -94,7 +99,7 @@ class TestHTTPHandlerCustomOutputFormat:
     @pytest.fixture
     def handler(self):
         @http_handler(
-            output_format=PipeFormatter.serialize,
+            output_format=pipe_output,
         )
         def handler(event, context):
             return {'user_id': 'peter'}
@@ -105,6 +110,9 @@ class TestHTTPHandlerCustomOutputFormat:
         assert isinstance(response, dict)
         assert response['statusCode'] == 200
         assert response['body'] == 'user_id|peter'
+
+        assert 'Content-Type' in response['headers']
+        assert response['headers']['Content-Type'] == 'application/text+piped'
 
 
 class TestHTTPHandlerCustomMarshmallowValidator:

@@ -1,11 +1,23 @@
+"""Base class for Validators."""
+
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Tuple, Union, Callable
+from typing import Any, Dict, List, Tuple, Union
 from collections import defaultdict
 
 from lambda_handlers.errors import EventValidationError, ResultValidationError
 
 
 class Validator(ABC):
+    """Base class for Validators.
+
+    Parameters
+    ----------
+    input_schema:
+        The schema to validate the input data: event and context.
+
+    output_schema:
+        The schema to validate the output data: handler's return value.
+    """
 
     def __init__(
         self,
@@ -17,9 +29,34 @@ class Validator(ABC):
 
     @property
     def schemas(self) -> Dict[str, Any]:
+        """The schemas for each section of context."""
         return {}
 
-    def validate_event(self, event, context) -> Tuple[Any, Any]:
+    def validate_event(self, event: Any, context: Any) -> Tuple[Any, Any]:
+        """Validate `event` against the input_schema.
+
+        Parameters
+        ----------
+        event:
+            The event data object.
+
+        context:
+            The context data object.
+
+        Returns
+        -------
+        data: Any
+            The same as `event` after passing through validation.
+
+        context: Any
+            The validated context in case there is no input_schema, but
+            the schemas function is used.
+
+        Raises
+        ------
+        ResultValidationError:
+            In case of validation errors.
+        """
         if self._input_schema:
             data, errors = self.validate(event, self._input_schema)
 
@@ -32,6 +69,23 @@ class Validator(ABC):
         return self._validate_event_contexts(event, context)
 
     def validate_result(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate `result` against the output_schema.
+
+        Parameters
+        ----------
+        result: Dict[str, Any]
+            The data object.
+
+        Returns
+        -------
+        data: Dict[str, Any]
+            The same as `result`.
+
+        Raises
+        ------
+        ResultValidationError:
+            In case of validation errors.
+        """
         if not self._output_schema:
             return result
 
@@ -60,7 +114,7 @@ class Validator(ABC):
     def _validate_many(
         self,
         target: Dict[str, Any],
-        definitions: Dict[str, Callable],
+        definitions: Dict[str, Any],
     ) -> Tuple[Dict[str, Any], Dict[str, List[Any]]]:
 
         cumulative_errors: Dict[str, List[Any]] = defaultdict(list)
@@ -81,8 +135,29 @@ class Validator(ABC):
 
     @abstractmethod
     def validate(self, instance: Any, schema: Any) -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
+        """Validate `instance` against `schema`.
+
+        Abstract method to be replaced when the specific validation method is chosen.
+
+        Parameters
+        ----------
+        instance:
+            The data object to be validated.
+
+        schema:
+            The data schema definition.
+
+        Returns
+        -------
+        transformed_data: Any
+            The result validated data.
+
+        errors: Union[Dict[str, Any], List[Any]]
+            The validation errors.
+        """
         pass
 
     @abstractmethod
     def format_errors(self, errors: Union[Dict[str, Any], List[Any]]) -> List[Dict[str, Any]]:
+        """Re-structure `errors` for output."""
         pass

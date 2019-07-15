@@ -1,3 +1,5 @@
+"""A validator for jsonschema Schemas."""
+
 from typing import Any, Dict, List, Tuple, Union
 from collections import defaultdict
 
@@ -13,13 +15,14 @@ JSONSchemaInstance = Dict[str, Any]
 
 
 class JSONSchemaValidator(Validator):
+    """A Validator that uses jsonschema schemas."""
 
     def validate(
         self,
         instance,
         schema: JSONSchemaInstance,
     ) -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
-
+        """Return the data and errors (if any) from validating `instance` against `schema`."""
         if not jsonschema:
             raise LambdaError('Required jsonschema dependency not found.')
 
@@ -28,6 +31,7 @@ class JSONSchemaValidator(Validator):
         return instance, errors
 
     def format_errors(self, errors) -> List[Dict[str, Any]]:
+        """Re-format the errors from JSONSchema."""
         path_errors: Dict[str, List[str]] = defaultdict(list)
         for error in errors:
             path_errors[error.path.pop()].append(error.message)

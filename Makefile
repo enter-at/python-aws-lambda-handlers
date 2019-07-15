@@ -38,7 +38,7 @@ install-ci:
 install-dev: install-ci
 	pre-commit install
 
-clean: clean-build clean-pyc clean-tox
+clean: clean-build clean-pyc clean-caches
 
 clean-build:
 	rm -fr build/
@@ -55,8 +55,9 @@ clean-pyc:
 	find . -name '*_cache' -exec rm -rf {} +
 	find . -name '*.egg-info' -exec rm -rf {} +
 
-clean-tox:
+clean-caches:
 	rm -rf .tox
+	rm -rf .pytest_cache
 
 lint:
 	tox -e lint

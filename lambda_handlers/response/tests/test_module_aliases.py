@@ -3,7 +3,7 @@ from typing import Any, Type
 import pytest
 
 import lambda_handlers.response as subject
-from lambda_handlers.response.cors_headers import CorsHeaders
+from lambda_handlers.response.cors_headers import CORSHeaders
 
 
 class TestModuleAliases:
@@ -11,7 +11,7 @@ class TestModuleAliases:
     @pytest.mark.parametrize(
         'alias, target',
         [
-            ('cors', CorsHeaders),
+            ('cors', CORSHeaders),
         ],
     )
     def test_alias(self, alias: str, target: Type[Any]):

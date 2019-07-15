@@ -1,3 +1,5 @@
+"""A validator for Marshmallow Schemas."""
+
 from typing import Any, Dict, List, Tuple, Union
 
 from lambda_handlers.errors import LambdaError
@@ -12,13 +14,14 @@ NO_FIELD_NAME = '__no_field_name__'
 
 
 class MarshmallowValidator(Validator):
+    """A Validator that uses Marshmallow schemas."""
 
     def validate(
         self,
         instance: Any,
         schema: 'marshmallow.Schema',
     ) -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
-
+        """Return the data and errors (if any) from validating `instance` against `schema`."""
         if not marshmallow:
             raise LambdaError('Required marshmallow dependency not found.')
 
@@ -29,7 +32,7 @@ class MarshmallowValidator(Validator):
         self,
         errors: Union[Dict[str, Any], List[Any]],
     ) -> List[Dict[str, Any]]:
-
+        """Re-format the errors from Marshmallow."""
         exception = marshmallow.ValidationError(errors)
         field_errors = exception.normalized_messages(no_field_name=NO_FIELD_NAME)
 

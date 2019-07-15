@@ -29,18 +29,15 @@ repos:
         files: \.md$
       - id: remove-crlf
         files: \.md$
-  - repo: https://github.com/pycqa/pydocstyle
-    rev: 4.0.0
-    hooks:
-    - id: pydocstyle
-      args:
-      - --match-dir=lambda_handlers
-      - --convention=numpy
   - repo: local
     hooks:
       - id: lint
         name: tox lint
         entry: tox -e lint
+        language: system
+      - id: doclint
+        name: tox doclint
+        entry: tox -e doclint
         language: system
       - id: mypy
         name: tox mypy
