@@ -1,3 +1,5 @@
+"""Test utilities and fixtures."""
+
 from typing import Any, Dict, List
 from collections import defaultdict
 
@@ -5,6 +7,7 @@ import pytest
 
 
 def builder(base_class):
+    """Return a simple Validator for testing."""
     class SimpleSchemaValidator(base_class):
 
         def validate(self, instance: Any, schema: dict):
@@ -34,4 +37,5 @@ def builder(base_class):
 
 @pytest.fixture
 def simple_schema_validator_builder():
+    """Return the simple Validator for testing builder function."""
     return builder

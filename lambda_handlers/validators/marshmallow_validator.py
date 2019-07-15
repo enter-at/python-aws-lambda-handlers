@@ -14,7 +14,8 @@ NO_FIELD_NAME = '__no_field_name__'
 
 
 class MarshmallowValidator(Validator):
-    """A validator for Marshmallow Schemas."""
+    """A Validator that uses Marshmallow schemas."""
+
     def validate(
         self,
         instance: Any,

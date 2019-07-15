@@ -19,6 +19,7 @@ class format:
         self.content_type = content_type
 
     def __call__(self, fn):
+        """Decorate functions."""
         return Format(
             content_type=self.content_type,
             format=fn,

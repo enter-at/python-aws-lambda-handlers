@@ -15,7 +15,7 @@ JSONSchemaInstance = Dict[str, Any]
 
 
 class JSONSchemaValidator(Validator):
-    """A validator for jsonschema Schemas."""
+    """A Validator that uses jsonschema schemas."""
 
     def validate(
         self,

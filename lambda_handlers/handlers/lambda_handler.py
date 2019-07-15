@@ -13,12 +13,12 @@ class LambdaHandler(ABC):
 
     Contain hooks to be called before, after, and when an exception is raised.
     """
+
     def __init__(self, handler: Optional[Callable] = None):
-        """Constructor in case the handler is called directly without parenthesis."""
         self._handler = handler
 
     def __call__(self, handler: Callable):
-        """The decorator function."""
+        """Decorate `handler`."""
         @wraps(handler)
         def wrapper(event, context):
             return self._call_handler(handler, event, context)
