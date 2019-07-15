@@ -1,3 +1,5 @@
+"""A handler for HTTP request events."""
+
 import logging
 from typing import Any, Dict
 
@@ -24,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 class HTTPHandler(EventHandler):
     """
-    Decorator class to facilitate the definition of AWS HTTP Lambda handlers with:
+    Decorator class to facilitate the definition of AWS HTTP Lambda handlers.
+
+    Features:
         - input validation,
         - output formatting,
         - CORS headers, and
@@ -53,14 +57,17 @@ class HTTPHandler(EventHandler):
         self._cors = cors or CORSHeaders(origin='*', credentials=True)
 
     def after(self, result):
+        """Event method to be called just after the handler is executed."""
         if not isinstance(result, APIGatewayProxyResult) and 'statusCode' not in result:
             result = ok(result)
         return self._create_response(result)
 
     def on_exception(self, exception):
+        """Event method to be called in case an exception is raises."""
         return self._create_response(self._handle_error(exception))
 
     def format_input(self, event):
+        """Return `event` with a formatted `event['body']`."""
         if 'body' in event:
             try:
                 event['body'] = self._input_format.format(event['body'])
@@ -69,6 +76,7 @@ class HTTPHandler(EventHandler):
         return event
 
     def format_output(self, response):
+        """Return `response` with a formatted `response['body']`."""
         response['body'] = self._output_format.format(response['body'])
         return response
 

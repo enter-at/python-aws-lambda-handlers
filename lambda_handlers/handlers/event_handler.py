@@ -1,3 +1,5 @@
+"""A handler for AWS events with validation and formatting."""
+
 from lambda_handlers import formatters
 from lambda_handlers.formatters import Format
 from lambda_handlers.validators.validator import Validator
@@ -8,7 +10,9 @@ from lambda_handlers.handlers.mixins.validation_mixin import ValidationMixin
 
 class EventHandler(LambdaHandler, ValidationMixin, FormattingMixin):
     """
-    Decorator class to facilitate the definition of AWS Lambda handlers with:
+    Decorator class to facilitate the definition of AWS Lambda event handlers.
+
+    Features:
         - input validation,
         - output formatting.
 
@@ -33,10 +37,13 @@ class EventHandler(LambdaHandler, ValidationMixin, FormattingMixin):
 
     @property
     def validator(self) -> Validator:
+        """The event and result validator."""
         return self._validator
 
     def before(self, event, context):
+        """Event method called before the handler. It formats and validates `event`."""
         return self.validate_event(self.format_input(event), context)
 
     def after(self, result):
+        """Event method called after the handler. It formats and validates `result`."""
         return self.validate_result(self.format_output(result))
