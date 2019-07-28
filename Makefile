@@ -26,14 +26,14 @@ help:
 	@echo "release - package a release in wheel and tarball, requires twine"
 
 install:
-	pip install pipenv
+	python -m pip install pipenv
 	pipenv install
-	python setup.py install
+	python -m pip install .
 
 install-ci:
-	pip install pipenv
+	python -m pip install pipenv
 	pipenv install --dev
-	python setup.py develop
+	python -m pip install -e .
 
 install-dev: install-ci
 	pre-commit install
@@ -88,7 +88,8 @@ coverage:
 	coverage report -m
 
 build:
-	python setup.py sdist bdist_wheel
+	python -m pip install pep517
+	python -m pep517.build -s -b .
 
 pypi:
 	twine upload dist/*
