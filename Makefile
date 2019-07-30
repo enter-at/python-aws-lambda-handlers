@@ -88,8 +88,7 @@ coverage:
 	coverage report -m
 
 build:
-	python -m pip install pep517
-	python -m pep517.build -s -b .
+	python setup.py sdist bdist_wheel
 
 pypi:
 	twine upload dist/*
