@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/enter-at/lambda-handlers/compare/v1.1.0...v1.1.1) (2019-07-30)
+
+
+### Bug Fixes
+
+* **release:** fix build target in Makefile ([81a4bab](https://github.com/enter-at/lambda-handlers/commit/81a4bab))
+
 # [1.1.0](https://github.com/enter-at/lambda-handlers/compare/v1.0.5...v1.1.0) (2019-07-30)
 
 
