@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/enter-at/lambda-handlers/compare/v1.0.5...v1.1.0) (2019-07-30)
+
+
+### Features
+
+* **event_handler:** add EventHandler for non-http handlers ([7c3eca8](https://github.com/enter-at/lambda-handlers/commit/7c3eca8))
+
 ## [1.0.5](https://github.com/enter-at/lambda-handlers/compare/v1.0.4...v1.0.5) (2019-07-05)
 
 
