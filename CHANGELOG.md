@@ -1,3 +1,19 @@
+# [2.0.0](https://github.com/enter-at/lambda-handlers/compare/v1.1.1...v2.0.0) (2019-08-01)
+
+
+### Bug Fixes
+
+* **LambdaHandler:** remove context option ([29f71c3](https://github.com/enter-at/lambda-handlers/commit/29f71c3))
+
+
+* Merge pull request #58 from enter-at/fix/remove-context-update ([d79deb8](https://github.com/enter-at/lambda-handlers/commit/d79deb8)), closes [#58](https://github.com/enter-at/lambda-handlers/issues/58)
+
+
+### BREAKING CHANGES
+
+* The context option has been removed
+* **LambdaHandler:** The context option has been removed.
+
 ## [1.1.1](https://github.com/enter-at/lambda-handlers/compare/v1.1.0...v1.1.1) (2019-07-30)
 
 
