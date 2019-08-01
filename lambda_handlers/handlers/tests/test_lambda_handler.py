@@ -2,7 +2,7 @@ from typing import Any, Dict, Tuple, cast
 
 import pytest
 
-from lambda_handlers.handlers.lambda_handler import Context, LambdaHandler
+from lambda_handlers.handlers.lambda_handler import LambdaContext, LambdaHandler
 
 Event = Dict[str, Any]
 
@@ -14,7 +14,7 @@ class EventAwareException(Exception):
 
 
 class CallOrderAwareHandler(LambdaHandler):
-    def before(self, event: Event, context: Context) -> Tuple[Event, Context]:
+    def before(self, event: Event, context: LambdaContext) -> Tuple[Event, LambdaContext]:
         event['route'].append('before')
         return super().before(event, context)
 

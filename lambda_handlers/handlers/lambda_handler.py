@@ -1,11 +1,11 @@
 """A base class for AWS Lambda handlers."""
 
 from abc import ABC
-from typing import Any, Dict, Tuple, Callable, Optional
+from typing import Any, Dict, Tuple, NewType, Callable, Optional
 from functools import wraps
 
 Event = Dict[str, Any]
-Context = Dict[str, Any]
+LambdaContext = NewType('LambdaContext', object)
 
 
 class LambdaHandler(ABC):
@@ -17,25 +17,20 @@ class LambdaHandler(ABC):
     def __init__(self, handler: Optional[Callable] = None):
         self._handler = handler
 
-    def __call__(self, handler: Callable):
-        """Decorate `handler`."""
+    def __call__(self, handler: Callable):  # noqa: D102
         @wraps(handler)
         def wrapper(event, context):
             return self._call_handler(handler, event, context)
+
         return wrapper
 
-    def _call_handler(
-        self,
-        handler: Callable,
-        event: Event,
-        context: Context,
-    ) -> Any:
+    def _call_handler(self, handler: Callable, event: Event, context: LambdaContext) -> Any:
         try:
             return self.after(handler(*self.before(event, context)))
         except Exception as exception:
             return self.on_exception(exception)
 
-    def before(self, event: Event, context: Context) -> Tuple[Event, Context]:
+    def before(self, event: Event, context: LambdaContext) -> Tuple[Event, LambdaContext]:
         """Event method to be called just before the handler is executed."""
         return event, context
 

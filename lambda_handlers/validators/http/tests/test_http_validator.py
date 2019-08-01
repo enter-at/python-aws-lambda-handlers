@@ -17,9 +17,8 @@ class TestValidatorWithoutSchema:
 
     def test_validate_event(self, subject, mocker):
         event = {}
-        context = {}
         validate_spy = mocker.spy(subject, 'validate')
-        assert (event, context) == subject.validate_event(event, context)
+        assert event == subject.validate_event(event)
         assert validate_spy.call_count == 0
 
     def test_validate_result(self, subject, mocker):
@@ -46,21 +45,19 @@ class TestValidatorWithRequestSchema:
             'accountable': True,
             'comment': 'some comment',
         }
-        context = {}
-        assert subject.validate_event(event, context)
+        assert subject.validate_event(event)
 
     def test_validate_invalid_request(self, subject):
         event = {
-            'price': '12',
+            'price': '13',
         }
-        context = {}
 
         with pytest.raises(EventValidationError) as error:
-            subject.validate_event(event, context)
+            subject.validate_event(event)
 
         assert isinstance(error.value.description, list)
         assert len(error.value.description) == 3
-        assert {'price': ['12 is not of type <class \'int\'>']} in error.value.description
+        assert {'price': ['13 is not of type <class \'int\'>']} in error.value.description
         assert {'accountable': ['missing']} in error.value.description
         assert {'comment': ['missing']} in error.value.description
 
@@ -113,8 +110,7 @@ class TestValidatorWithPathParametersSchema:
                 'accountable': True,
             },
         }
-        context = {}
-        assert subject.validate_event(event, context)
+        assert subject.validate_event(event)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -122,10 +118,9 @@ class TestValidatorWithPathParametersSchema:
                 'user_name': True,
             },
         }
-        context = {}
 
         with pytest.raises(EventValidationError) as error:
-            subject.validate_event(event, context)
+            subject.validate_event(event)
 
         nested_errors = error.value.description
         assert isinstance(nested_errors, list)
@@ -162,8 +157,7 @@ class TestValidatorWithPathParametersSchemaAndQueryStringParametersSchema:
                 'filter': 'a,b,c',
             },
         }
-        context = {}
-        assert subject.validate_event(event, context)
+        assert subject.validate_event(event)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -174,10 +168,9 @@ class TestValidatorWithPathParametersSchemaAndQueryStringParametersSchema:
                 'filter': 100,
             },
         }
-        context = {}
 
         with pytest.raises(EventValidationError) as error:
-            subject.validate_event(event, context)
+            subject.validate_event(event)
 
         nested_errors = error.value.description
         assert isinstance(nested_errors, list)
@@ -230,8 +223,7 @@ class TestValidatorWithPathParametersSchemaAndQueryStringParametersSchemaAndBody
                 'content': 'some long text',
             },
         }
-        context = {}
-        assert subject.validate_event(event, context)
+        assert subject.validate_event(event)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -242,10 +234,9 @@ class TestValidatorWithPathParametersSchemaAndQueryStringParametersSchemaAndBody
                 'filter': 100,
             },
         }
-        context = {}
 
         with pytest.raises(EventValidationError) as error:
-            subject.validate_event(event, context)
+            subject.validate_event(event)
 
         nested_errors = error.value.description
         assert isinstance(nested_errors, list)

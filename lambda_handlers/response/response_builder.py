@@ -4,13 +4,7 @@ from http import HTTPStatus
 from typing import Any, Union
 
 from lambda_handlers.types import APIGatewayProxyResult
-from lambda_handlers.errors import (
-    LambdaError,
-    NotFoundError,
-    ForbiddenError,
-    BadRequestError,
-    InternalServerError,
-)
+from lambda_handlers.errors import LambdaError, NotFoundError, ForbiddenError, BadRequestError, InternalServerError
 
 
 def ok(result: Any) -> APIGatewayProxyResult:

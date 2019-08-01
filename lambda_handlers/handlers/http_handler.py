@@ -4,13 +4,7 @@ import logging
 from typing import Any, Dict
 
 from lambda_handlers.types import Headers, APIGatewayProxyResult
-from lambda_handlers.errors import (
-    FormatError,
-    NotFoundError,
-    BadRequestError,
-    ValidationError,
-    ResultValidationError,
-)
+from lambda_handlers.errors import FormatError, NotFoundError, BadRequestError, ValidationError, ResultValidationError
 from lambda_handlers.response import CORSHeaders
 from lambda_handlers.handlers.event_handler import EventHandler
 from lambda_handlers.response.response_builder import (
@@ -96,7 +90,8 @@ class HTTPHandler(EventHandler):
 
         return headers or None
 
-    def _handle_error(self, error) -> APIGatewayProxyResult:
+    @staticmethod
+    def _handle_error(error) -> APIGatewayProxyResult:
         if isinstance(error, NotFoundError):
             return not_found(error.description)
         if isinstance(error, ResultValidationError):

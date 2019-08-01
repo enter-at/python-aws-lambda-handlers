@@ -42,7 +42,7 @@ class EventHandler(LambdaHandler, ValidationMixin, FormattingMixin):
 
     def before(self, event, context):
         """Event hook called before the handler. It formats and validates `event`."""
-        return self.validate_event(self.format_input(event), context)
+        return self.validate_event(self.format_input(event)), context
 
     def after(self, result):
         """Event method called after the handler. It formats and validates `result`."""

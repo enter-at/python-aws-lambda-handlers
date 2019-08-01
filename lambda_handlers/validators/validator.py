@@ -32,16 +32,13 @@ class Validator(ABC):
         """The schemas for each section of context."""
         return {}
 
-    def validate_event(self, event: Any, context: Any) -> Tuple[Any, Any]:
+    def validate_event(self, event: Any) -> Any:
         """Validate `event` against the input_schema.
 
         Parameters
         ----------
         event:
             The event data object.
-
-        context:
-            The context data object.
 
         Returns
         -------
@@ -64,9 +61,9 @@ class Validator(ABC):
                 description = self.format_errors(errors)
                 raise EventValidationError(description)
 
-            return data, context
+            return data
 
-        return self._validate_event_contexts(event, context)
+        return self._validate_event_contexts(event)
 
     def validate_result(self, result: Dict[str, Any]) -> Dict[str, Any]:
         """Validate `result` against the output_schema.
@@ -97,7 +94,7 @@ class Validator(ABC):
 
         return data
 
-    def _validate_event_contexts(self, event, context) -> Tuple[Dict[str, Any], List[Any]]:
+    def _validate_event_contexts(self, event) -> Union[Dict[str, Any], List[Any]]:
 
         transformed_data, errors = self._validate_many(
             event,
@@ -109,7 +106,7 @@ class Validator(ABC):
                 [{key: self.format_errors(error)} for key, error in errors.items()],
             )
 
-        return transformed_data, context
+        return transformed_data
 
     def _validate_many(
         self,

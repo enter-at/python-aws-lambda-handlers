@@ -3,12 +3,8 @@ from marshmallow import Schema, fields
 
 from lambda_handlers.errors import EventValidationError
 from lambda_handlers.validators.http.http_validator import HttpValidator
-from lambda_handlers.validators.marshmallow_validator import (
-    MarshmallowValidator,
-)
-from lambda_handlers.validators.http.http_marshmallow_validator import (
-    HttpMarshmallowValidator,
-)
+from lambda_handlers.validators.marshmallow_validator import MarshmallowValidator
+from lambda_handlers.validators.http.http_marshmallow_validator import HttpMarshmallowValidator
 
 
 class TestHttpMarshmallowSchemaValidator:
@@ -39,8 +35,7 @@ class TestValidatorWithPathParametersSchema:
                 'accountable': True,
             },
         }
-        context = {}
-        assert subject.validate_event(event, context)
+        assert subject.validate_event(event)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -48,10 +43,8 @@ class TestValidatorWithPathParametersSchema:
                 'user_name': True,
             },
         }
-        context = {}
-
         with pytest.raises(EventValidationError) as error:
-            subject.validate_event(event, context)
+            subject.validate_event(event)
 
         nested_errors = error.value.description
         assert isinstance(nested_errors, list)
