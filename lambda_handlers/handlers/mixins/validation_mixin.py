@@ -13,14 +13,12 @@ class ValidationMixin:
         """Return the validator for events and results."""
         pass
 
-    def validate_event(self, event, context):
+    def validate_event(self, event):
         """Validate the event with `self.validator`, return event and context."""
         if self.validator:
-            transformed_event, transformed_context = self.validator.validate_event(event, context)
+            transformed_event = self.validator.validate_event(event)
             event.update(transformed_event)
-            if context is not None:
-                context.update(transformed_context)
-        return event, context
+        return event
 
     def validate_result(self, result: Dict[str, Any]) -> Dict[str, Any]:
         """Validate and return the result with `self.validator`."""

@@ -29,9 +29,8 @@ class TestValidatorWithoutSchema:
 
     def test_validate_event(self, subject, mocker):
         event = {}
-        context = {}
         validate_spy = mocker.spy(subject, 'validate')
-        assert (event, context) == subject.validate_event(event, context)
+        assert event == subject.validate_event(event)
         assert validate_spy.call_count == 0
 
     def test_validate_result(self, subject, mocker):
@@ -58,17 +57,15 @@ class TestValidatorWithInputSchema:
             'accountable': True,
             'comment': 'some comment',
         }
-        context = {}
-        assert subject.validate_event(event, context)
+        assert subject.validate_event(event)
 
     def test_validate_invalid_request(self, subject):
         event = {
             'price': '12',
         }
-        context = {}
 
         with pytest.raises(EventValidationError) as error:
-            subject.validate_event(event, context)
+            subject.validate_event(event)
 
         assert isinstance(error.value.description, list)
         assert len(error.value.description) == 3
@@ -125,8 +122,7 @@ class TestValidatorWithRecordsSchema:
                 'accountable': True,
             },
         }
-        context = {}
-        assert subject.validate_event(event, context)
+        assert subject.validate_event(event)
 
     def test_validate_invalid_request(self, subject):
         event = {
@@ -134,10 +130,9 @@ class TestValidatorWithRecordsSchema:
                 'user_name': True,
             },
         }
-        context = {}
 
         with pytest.raises(EventValidationError) as error:
-            subject.validate_event(event, context)
+            subject.validate_event(event)
 
         nested_errors = error.value.description
         assert isinstance(nested_errors, list)
@@ -167,17 +162,15 @@ class TestValidatorWithInputSchemaAndRecordsSchema:
             'price': 12,
             'accountable': True,
         }
-        context = {}
-        assert subject.validate_event(event, context)
+        assert subject.validate_event(event)
 
     def test_validate_invalid_input(self, subject):
         event = {
             'price': '12',
         }
-        context = {}
 
         with pytest.raises(EventValidationError) as error:
-            subject.validate_event(event, context)
+            subject.validate_event(event)
 
         assert isinstance(error.value.description, list)
         assert len(error.value.description) == 2
