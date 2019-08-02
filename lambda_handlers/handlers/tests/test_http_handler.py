@@ -14,6 +14,7 @@ class TestHTTPHandlerDefaults:
         @http_handler()
         def handler(event, context):
             return {'user_id': 12}
+
         return handler
 
     def test_empty_body_validation(self, handler):
@@ -63,6 +64,7 @@ class TestHTTPHandlerCustomBodyFormat:
         )
         def handler(event, context):
             return event['body']
+
         return handler
 
     def test_custom_body_formatting(self, handler):
@@ -82,6 +84,7 @@ class TestHTTPHandlerCORS:
         )
         def handler(event, context):
             return event
+
         return handler
 
     def test_custom_cors_headers(self, handler):
@@ -103,6 +106,7 @@ class TestHTTPHandlerCustomOutputFormat:
         )
         def handler(event, context):
             return {'user_id': 'peter'}
+
         return handler
 
     def test_custom_output_format(self, handler):
@@ -128,13 +132,11 @@ class TestHTTPHandlerCustomMarshmallowValidator:
             statusCode = fields.Integer(required=True)
 
         @http_handler(
-            validator=validators.http.marshmallow(
-                body=UserSchema(),
-                response=ResponseSchema(),
-            ),
+            validator=validators.http.marshmallow(body=UserSchema(), response=ResponseSchema()),
         )
         def handler(event, context):
             return event['body']
+
         return handler
 
     @pytest.mark.parametrize(
