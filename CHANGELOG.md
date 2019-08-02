@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/enter-at/lambda-handlers/compare/v2.0.0...v2.0.1) (2019-08-02)
+
+
+### Bug Fixes
+
+* **validators:** import http module ([34387e2](https://github.com/enter-at/lambda-handlers/commit/34387e2))
+
 # [2.0.0](https://github.com/enter-at/lambda-handlers/compare/v1.1.1...v2.0.0) (2019-08-01)
 
 
