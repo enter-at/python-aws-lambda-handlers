@@ -3,7 +3,7 @@
 from typing import Any, Dict, Union, Optional
 from dataclasses import asdict, dataclass
 
-Headers = Optional[Dict[str, Union[str, bool, int]]]
+Headers = Dict[str, Union[str, bool, int]]
 
 
 @dataclass
@@ -12,8 +12,8 @@ class APIGatewayProxyResult:
 
     statusCode: int
     body: Union[str, Dict[str, Any]]
-    headers: Headers = None
-    multiValueHeaders: Headers = None
+    headers: Optional[Headers] = None
+    multiValueHeaders: Optional[Headers] = None
     isBase64Encoded: Optional[bool] = None
 
     def asdict(self) -> Dict[str, Any]:
