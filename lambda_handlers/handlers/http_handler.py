@@ -1,7 +1,7 @@
 """A handler for HTTP request events."""
 
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from lambda_handlers.types import Headers, APIGatewayProxyResult
 from lambda_handlers.errors import FormatError, NotFoundError, BadRequestError, ValidationError, ResultValidationError
@@ -78,7 +78,7 @@ class HTTPHandler(EventHandler):
         result.headers = self._create_headers(result.headers)
         return self.format_output(self.validate_result(result.asdict()))
 
-    def _create_headers(self, headers: Headers) -> Headers:
+    def _create_headers(self, headers: Optional[Headers]) -> Optional[Headers]:
         if not headers:
             headers = {}
 
