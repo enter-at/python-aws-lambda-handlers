@@ -1,45 +1,35 @@
 dist: xenial
-
 env:
   global:
   - CC_TEST_REPORTER_ID=$TEST_REPORTER_ID
-
 language: python
-
 os:
 - linux
-
 python:
 - '3.7'
-
 install:
 - python -m pip install -U pip setuptools pipenv
 - pipenv install --dev
 - python -m pip install -e .
-
 before_script:
 - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
   > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
 - "./cc-test-reporter before-build"
-
 script:
 - tox -e lint
 - tox -e doclint
 - tox -e isort
 - tox -e mypy
 - tox -e tests
-
 after_script:
 - coverage xml -o coverage.xml
 - "./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $TRAVIS_TEST_RESULT"
-
 deploy:
 - provider: script
   script: ci-scripts/semantic-release.sh
   on:
     branch: master
-
 notifications:
   slack:
     rooms:
