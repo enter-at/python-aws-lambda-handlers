@@ -5,8 +5,15 @@ It includes input validation, error handling and response formatting.
 
 ## Contents
 
-* [Validators](validators.md)
-* [API Reference](source/modules)
+```eval_rst
+.. toctree::
+    :maxdepth: 1
+
+    introduction/index
+    guides/index
+    examples/index
+    _api/index
+```
 
 ## Getting started
 
