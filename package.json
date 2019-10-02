@@ -6,7 +6,7 @@
     "@semantic-release/changelog": "3.0.4",
     "@semantic-release/exec": "3.3.7",
     "@semantic-release/git": "7.0.16",
-    "@semantic-release/github": "5.4.3",
+    "@semantic-release/github": "5.5.0",
     "semantic-release": "15.13.24"
   },
   "repository": {
