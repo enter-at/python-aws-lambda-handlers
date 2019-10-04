@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/enter-at/lambda-handlers/compare/v2.0.1...v3.0.0) (2019-10-04)
+
+
+### chore
+
+* **marshmallow:** update to version 3.x ([99f935f](https://github.com/enter-at/lambda-handlers/commit/99f935f))
+
+
+### BREAKING CHANGES
+
+* **marshmallow:** Marshmallow version changed to 3.x
+
 ## [2.0.1](https://github.com/enter-at/lambda-handlers/compare/v2.0.0...v2.0.1) (2019-08-02)
 
 
