@@ -8,9 +8,9 @@ from lambda_handlers.validators.validator import Validator
 try:
     import marshmallow
 except ImportError:
-    marshmallow = None
+    pass
 
-NO_FIELD_NAME = '__no_field_name__'
+NO_FIELD_NAME = '_schema'
 
 
 class MarshmallowValidator(Validator):
@@ -25,8 +25,10 @@ class MarshmallowValidator(Validator):
         if not marshmallow:
             raise LambdaError('Required marshmallow dependency not found.')
 
-        result = schema.load(instance)
-        return result.data, result.errors
+        try:
+            return schema.load(instance), []
+        except marshmallow.ValidationError as error:
+            return None, error.messages
 
     def format_errors(
         self,
@@ -34,7 +36,7 @@ class MarshmallowValidator(Validator):
     ) -> List[Dict[str, Any]]:
         """Re-format the errors from Marshmallow."""
         exception = marshmallow.ValidationError(errors)
-        field_errors = exception.normalized_messages(no_field_name=NO_FIELD_NAME)
+        field_errors = exception.normalized_messages()
 
         if NO_FIELD_NAME in field_errors and len(field_errors) == 1:
             entry = field_errors[NO_FIELD_NAME]

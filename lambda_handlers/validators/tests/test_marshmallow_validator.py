@@ -1,7 +1,7 @@
 from typing import Any, Dict
 
 import pytest
-from marshmallow import Schema, ValidationError, fields, validates_schema
+from marshmallow import Schema, fields
 from marshmallow.validate import Range
 
 from lambda_handlers.validators.validator import Validator
@@ -13,21 +13,9 @@ class EventSchema(Schema):
     total = fields.Integer(validate=Range(min=1, max=99))
 
 
-class NotOptionalEventSchema(EventSchema):
-    @validates_schema
-    def payload_validator(self, data):
-        if data is None:
-            raise ValidationError('Invalid payload')
-
-
 @pytest.fixture(scope='session')
 def schema() -> Dict[str, Any]:
     return EventSchema()
-
-
-@pytest.fixture(scope='session')
-def not_optional_schema() -> Dict[str, Any]:
-    return NotOptionalEventSchema()
 
 
 @pytest.fixture(scope='session')
@@ -60,13 +48,7 @@ class TestMarshmallowSchemaValidator:
         event = None
         data, errors = validator.validate(event, schema)
         assert not data
-        assert not errors
-
-    def test_validate_none_data_not_optional(self, validator, not_optional_schema):
-        event = None
-        data, errors = validator.validate(event, not_optional_schema)
-        assert not data
-        assert errors == {'_schema': ['Invalid payload']}
+        assert errors == {'_schema': ['Invalid input type.']}
 
 
 class TestMarshmallowSchemaValidatorFormatErrors:
@@ -77,7 +59,7 @@ class TestMarshmallowSchemaValidatorFormatErrors:
         formatted_errors = validator.format_errors(errors)
         assert len(formatted_errors) == 2
         assert {'price': ['Not a valid integer.']} in formatted_errors
-        assert {'total': ['Must be between 1 and 99.']} in formatted_errors
+        assert {'total': ['Must be greater than or equal to 1 and less than or equal to 99.']} in formatted_errors
 
     def test_format_empty_list_of_errors(self, validator, schema):
         assert validator.format_errors([]) == []
