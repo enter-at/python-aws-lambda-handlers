@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/enter-at/lambda-handlers/compare/v3.0.1...v3.0.2) (2019-10-05)
+
+
+### Bug Fixes
+
+* **lambda_handler:** gracefully handle None return values ([1f63abe](https://github.com/enter-at/lambda-handlers/commit/1f63abe))
+
 ## [3.0.1](https://github.com/enter-at/lambda-handlers/compare/v3.0.0...v3.0.1) (2019-10-05)
 
 
