@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/enter-at/lambda-handlers/compare/v3.0.0...v3.0.1) (2019-10-05)
+
+
+### Bug Fixes
+
+* **lambda_handler:** ensure decorator forwards handler self ([e914f37](https://github.com/enter-at/lambda-handlers/commit/e914f37))
+
 # [3.0.0](https://github.com/enter-at/lambda-handlers/compare/v2.0.1...v3.0.0) (2019-10-04)
 
 
