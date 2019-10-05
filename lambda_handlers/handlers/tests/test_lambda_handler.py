@@ -31,7 +31,7 @@ lambda_handler = CallOrderAwareHandler()
 
 
 @pytest.fixture
-def handler():
+def function_handler():
     @lambda_handler
     def handler(event, context):
         if context is None:
@@ -41,20 +41,51 @@ def handler():
     return handler
 
 
-class TestLambdaHandler:
+@pytest.fixture
+def method_handler():
+    class Adapter:
+        @lambda_handler
+        def __call__(self, event, context):
+            if context is None:
+                raise EventAwareException(message='no such context', event=event)
+            return event
+
+    return Adapter()
+
+
+class TestLambdaHandlerDecorateFunction:
 
     @pytest.fixture
     def event(self):
         return {'route': []}
 
-    def test_call_order(self, handler, event):
-        result = handler(event, {})
+    def test_call_order(self, function_handler, event):
+        result = function_handler(event, {})
 
         assert result == event
         assert event['route'] == ['before', 'after']
 
-    def test_call_exception(self, handler, event):
+    def test_call_exception(self, function_handler, event):
         with pytest.raises(EventAwareException, match='no such context'):
-            handler(event, None)
+            function_handler(event, None)
+
+        assert event['route'] == ['before', 'on_exception']
+
+
+class TestLambdaHandlerDecorateMethod:
+
+    @pytest.fixture
+    def event(self):
+        return {'route': []}
+
+    def test_call_order(self, method_handler, event):
+        result = method_handler(event, {})
+
+        assert result == event
+        assert event['route'] == ['before', 'after']
+
+    def test_call_exception(self, method_handler, event):
+        with pytest.raises(EventAwareException, match='no such context'):
+            method_handler(event, None)
 
         assert event['route'] == ['before', 'on_exception']
