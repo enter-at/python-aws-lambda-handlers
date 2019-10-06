@@ -4,6 +4,8 @@ executors:
   python:
     docker:
       - image: circleci/python:3.7.4
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
 
 commands:
   install-python:
@@ -11,7 +13,7 @@ commands:
       - run:
           name: Install Python dependencies
           command: |
-            python -m pip install -U pip setuptools pipenv tox tox-pipenv-install
+            sudo python -m pip install -U pip setuptools pipenv tox tox-pipenv-install
 
 jobs:
   test:
@@ -22,12 +24,12 @@ jobs:
       - run:
           name: Run static code analysis
           command: |
-            pipenv run tox -e lint
-            pipenv run tox -e isort
-            pipenv run tox -e mypy
+            tox -e lint
+            tox -e isort
+            tox -e mypy
       - run:
           name: Run tests
-          command: pipenv run tox -e tests
+          command: tox -e tests
       - run:
           name: Create test coverage report
           command: coverage xml -o test-results/coverage/result.xml
