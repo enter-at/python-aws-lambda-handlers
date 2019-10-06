@@ -1,0 +1,42 @@
+version: 2.1
+
+executors:
+  python:
+    docker:
+      - image: circleci/python:3.7.4
+
+commands:
+  install-python:
+    steps:
+      - run:
+          name: Install Python dependencies
+          command: |
+            python -m pip install -U pip setuptools pipenv
+            pipenv install --dev
+
+jobs:
+  test:
+    executor: python
+    steps:
+      - checkout
+      - install-python
+      - run:
+          name: Run static code analysis
+          command: |
+            pipenv run tox -e lint
+            pipenv run tox -e isort
+            pipenv run tox -e mypy
+      - run:
+          name: Run tests
+          command: pipenv run tox -e tests
+      - run:
+          name: Create test coverage report
+          command: coverage xml -o test-results/coverage/result.xml
+      - store_test_results:
+          path: test-results
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
