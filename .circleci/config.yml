@@ -13,6 +13,7 @@ commands:
           command: |
             python -m pip install -U pip setuptools pipenv
             pipenv install --dev
+            python -m pip install -e .
 
 jobs:
   test:
