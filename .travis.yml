@@ -8,9 +8,7 @@ os:
 python:
 - '3.7'
 install:
-- python -m pip install -U pip setuptools pipenv
-- pipenv install --dev
-- python -m pip install -e .
+- python -m pip install -U pip setuptools pipenv tox tox-pipenv-install
 before_script:
 - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
   > ./cc-test-reporter
