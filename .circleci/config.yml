@@ -32,7 +32,7 @@ jobs:
           command: tox -e tests
       - run:
           name: Create test coverage report
-          command: coverage xml -o test-results/coverage/result.xml
+          command: tox -e coverage
       - store_test_results:
           path: test-results
 
