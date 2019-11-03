@@ -10,6 +10,7 @@ from lambda_handlers.handlers.event_handler import EventHandler
 from lambda_handlers.response.response_builder import (
     ok,
     not_found,
+    no_content,
     bad_request,
     bad_implementation,
     internal_server_error,
@@ -52,7 +53,9 @@ class HTTPHandler(EventHandler):
 
     def after(self, result):
         """Event method to be called just after the handler is executed."""
-        if not isinstance(result, APIGatewayProxyResult) and 'statusCode' not in result:
+        if result is None:
+            result = no_content()
+        elif not isinstance(result, APIGatewayProxyResult) and 'statusCode' not in result:
             result = ok(result)
         return self._create_response(result)
 
@@ -71,7 +74,8 @@ class HTTPHandler(EventHandler):
 
     def format_output(self, response):
         """Return `response` with a formatted `response['body']`."""
-        response['body'] = self._output_format.format(response['body'])
+        if 'body' in response:
+            response['body'] = self._output_format.format(response['body'])
         return response
 
     def _create_response(self, result: APIGatewayProxyResult) -> Dict[str, Any]:

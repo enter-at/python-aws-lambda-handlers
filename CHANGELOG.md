@@ -1,3 +1,29 @@
+## [3.0.2](https://github.com/enter-at/lambda-handlers/compare/v3.0.1...v3.0.2) (2019-10-05)
+
+
+### Bug Fixes
+
+* **lambda_handler:** gracefully handle None return values ([1f63abe](https://github.com/enter-at/lambda-handlers/commit/1f63abe))
+
+## [3.0.1](https://github.com/enter-at/lambda-handlers/compare/v3.0.0...v3.0.1) (2019-10-05)
+
+
+### Bug Fixes
+
+* **lambda_handler:** ensure decorator forwards handler self ([e914f37](https://github.com/enter-at/lambda-handlers/commit/e914f37))
+
+# [3.0.0](https://github.com/enter-at/lambda-handlers/compare/v2.0.1...v3.0.0) (2019-10-04)
+
+
+### chore
+
+* **marshmallow:** update to version 3.x ([99f935f](https://github.com/enter-at/lambda-handlers/commit/99f935f))
+
+
+### BREAKING CHANGES
+
+* **marshmallow:** Marshmallow version changed to 3.x
+
 ## [2.0.1](https://github.com/enter-at/lambda-handlers/compare/v2.0.0...v2.0.1) (2019-08-02)
 
 

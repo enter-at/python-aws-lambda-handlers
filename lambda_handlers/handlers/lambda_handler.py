@@ -19,16 +19,20 @@ class LambdaHandler(ABC):
 
     def __call__(self, handler: Callable):  # noqa: D102
         @wraps(handler)
-        def wrapper(event, context):
-            return self._call_handler(handler, event, context)
+        def wrapper(*args):
+            try:
+                handler_self = args[0] if len(args) > 2 else None
+                return self.after(self._call_handler(handler_self, handler, *self.before(*args[-2:])))
+            except Exception as exception:
+                return self.on_exception(exception)
 
         return wrapper
 
-    def _call_handler(self, handler: Callable, event: Event, context: LambdaContext) -> Any:
-        try:
-            return self.after(handler(*self.before(event, context)))
-        except Exception as exception:
-            return self.on_exception(exception)
+    def _call_handler(self, handler_self, handler, event, context):
+        if handler_self:
+            return handler(handler_self, event, context)
+
+        return handler(event, context)
 
     def before(self, event: Event, context: LambdaContext) -> Tuple[Event, LambdaContext]:
         """Event method to be called just before the handler is executed."""

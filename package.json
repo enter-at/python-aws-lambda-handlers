@@ -3,11 +3,11 @@
   "description": "An opinionated Python package that facilitates specifying AWS Lambda handlers including input validation, error handling and response formatting",
   "dependencies": {},
   "devDependencies": {
-    "@semantic-release/changelog": "3.0.4",
-    "@semantic-release/exec": "3.3.7",
-    "@semantic-release/git": "7.0.16",
-    "@semantic-release/github": "5.4.3",
-    "semantic-release": "15.13.24"
+    "@semantic-release/changelog": "3.0.5",
+    "@semantic-release/exec": "3.3.8",
+    "@semantic-release/git": "7.0.17",
+    "@semantic-release/github": "5.5.5",
+    "semantic-release": "15.13.29"
   },
   "repository": {
     "type": "git",

@@ -5,6 +5,7 @@ from lambda_handlers import validators
 from lambda_handlers.handlers import http_handler
 from lambda_handlers.response import cors
 from lambda_handlers.formatters.format import format
+from lambda_handlers.response.response_builder import no_content
 
 
 class TestHTTPHandlerDefaults:
@@ -117,6 +118,40 @@ class TestHTTPHandlerCustomOutputFormat:
 
         assert 'Content-Type' in response['headers']
         assert response['headers']['Content-Type'] == 'application/text+piped'
+
+
+class TestHTTPHandlerOutputFormatNoBodyDefault:
+
+    @pytest.fixture
+    def handler(self):
+        @http_handler()
+        def handler(event, context):
+            return None
+
+        return handler
+
+    def test_format_no_body(self, handler):
+        response = handler({}, None)
+        assert isinstance(response, dict)
+        assert response['statusCode'] == 204
+        assert 'body' not in response
+
+
+class TestHTTPHandlerOutputFormatNoBody:
+
+    @pytest.fixture
+    def handler(self):
+        @http_handler()
+        def handler(event, context):
+            return no_content()
+
+        return handler
+
+    def test_format_no_body(self, handler):
+        response = handler({}, None)
+        assert isinstance(response, dict)
+        assert response['statusCode'] == 204
+        assert 'body' not in response
 
 
 class TestHTTPHandlerCustomMarshmallowValidator:
