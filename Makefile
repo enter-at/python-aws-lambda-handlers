@@ -73,6 +73,7 @@ isort-check:
 
 isort:
 	isort -rc lambda_handlers/
+	isort -rc examples/
 
 test-cov:
 	py.test --cov-report term-missing --cov=$(project-name)
