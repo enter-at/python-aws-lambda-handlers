@@ -1,0 +1,34 @@
+site_name: lambda-handlers
+theme: flatly
+site_url: https://lambda-handlers.readthedocs.io
+repo_url: https://github.com/enter-at/lambda-handlers
+site_description: An opinionated Python package that facilitates specifying AWS Lambda handlers.
+site_author: Steffen Leistner, Alexandre Savio
+site_dir: site
+docs_dir: docs
+copyright: LICENSE
+plugins:
+    - search
+    - markdownextradata: {}
+extra:
+  project:
+    name: lambda-handlers
+    docs_url: https://lambda-handlers.readthedocs.io
+    git_url: https://github.com/enter-at/lambda-handlers
+    fork_url: https://github.com/enter-at/lambda-handlers/fork
+    issues_url: https://github.com/enter-at/lambda-handlers/issues
+    authors: Steffen Leistner, Alexandre Savio
+    max_line_width: 120
+nav:
+    - Home: index.md
+    - User Guide:
+        - Quickstart: quickstart.md
+        - Examples: examples.md
+    - About:
+        - Release Notes: about/changelog.md
+        - License: about/license.md
+    - Contributing:
+        - Contributing guide: contributing/1.-contributing-guide.md
+        - Coding standard: contributing/2.-coding-standard.md
+        - Code of conduct: contributing/3.-code-of-conduct.md
+        - Acknowledgements: contributing/4.-acknowledgements.md
