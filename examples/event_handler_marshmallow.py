@@ -1,7 +1,8 @@
-from lambda_handlers import validators
-from lambda_handlers.handlers import event_handler
 from marshmallow import Schema, fields, validates_schema
 from marshmallow.validate import Range, ValidationError
+
+from lambda_handlers import validators
+from lambda_handlers.handlers import event_handler
 
 
 class EventSchema(Schema):
