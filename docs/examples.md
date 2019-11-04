@@ -15,7 +15,7 @@ def handler(event, context):
     return event['body']
 ```
 
-Using jsonschema to validate a the input of a User model.
+Using jsonschema to validate a User model as input.
 
 ```python
 from typing import Dict, Any
@@ -38,8 +38,7 @@ def handler(event, context):
     return user
 ```
 
-Using Marshmallow to validate a User model in the input and in
-the response body.
+Using Marshmallow to validate a User model as input body and response body.
 
 ```python
 from lambda_handlers import validators
