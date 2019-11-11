@@ -69,10 +69,10 @@ mypy:
 	tox -e mypy
 
 isort-check:
-	tox -e isort
+	tox -e isort -- -c
 
 isort:
-	isort -rc lambda_handlers/
+	tox -e isort
 
 test-cov:
 	py.test --cov-report term-missing --cov=$(project-name)
