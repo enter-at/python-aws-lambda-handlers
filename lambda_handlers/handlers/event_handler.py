@@ -46,4 +46,4 @@ class EventHandler(LambdaHandler, ValidationMixin, FormattingMixin):
 
     def after(self, result):
         """Event method called after the handler. It formats and validates `result`."""
-        return self.validate_result(self.format_output(result))
+        return self.format_output(self.validate_result(result))
