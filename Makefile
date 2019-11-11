@@ -23,7 +23,10 @@ help:
 	@echo "isort - sort imports"
 	@echo "isort-check - check if your imports are correctly sorted"
 	@echo "build - create the distribution package"
+	@echo "docs - build the documentation pages"
+	@echo "docs-serve - build and serve locally the documentation pages"
 	@echo "release - package a release in wheel and tarball, requires twine"
+
 
 install:
 	python -m pip install pipenv
@@ -86,6 +89,12 @@ develop:
 coverage:
 	pytest --cov=hansel
 	coverage report -m
+
+docs:
+	tox -e docs
+
+docs-serve:
+	tox -e docs -- serve
 
 build:
 	python setup.py sdist bdist_wheel
