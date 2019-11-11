@@ -1,5 +1,7 @@
 site_name: lambda-handlers
-theme: flatly
+# theme: flatly
+theme:
+  name: 'material'
 site_url: https://lambda-handlers.readthedocs.io
 repo_url: https://github.com/enter-at/lambda-handlers
 site_description: An opinionated Python package that facilitates specifying AWS Lambda handlers.
@@ -10,7 +12,31 @@ copyright: LICENSE
 plugins:
     - search
     - markdownextradata: {}
+markdown_extensions:
+  - toc:
+      permalink: true
+  - codehilite:
+      linenums: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
 extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/enter-at'
   project:
     name: lambda-handlers
     docs_url: https://lambda-handlers.readthedocs.io

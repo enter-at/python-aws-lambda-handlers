@@ -70,6 +70,5 @@ node_modules
 .vscode
 .idea
 
-# Sphinx temp
-docs/_build
-docs/source
+# Mkdocs temp
+site
