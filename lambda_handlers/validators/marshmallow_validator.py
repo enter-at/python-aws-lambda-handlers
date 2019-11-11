@@ -16,11 +16,7 @@ NO_FIELD_NAME = '_schema'
 class MarshmallowValidator(Validator):
     """A Validator that uses Marshmallow schemas."""
 
-    def validate(
-        self,
-        instance: Any,
-        schema: 'marshmallow.Schema',
-    ) -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
+    def validate(self, instance: Any, schema: 'marshmallow.Schema') -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
         """Return the data and errors (if any) from validating `instance` against `schema`."""
         if not marshmallow:
             raise LambdaError('Required marshmallow dependency not found.')
@@ -30,10 +26,7 @@ class MarshmallowValidator(Validator):
         except marshmallow.ValidationError as error:
             return None, error.messages
 
-    def format_errors(
-        self,
-        errors: Union[Dict[str, Any], List[Any]],
-    ) -> List[Dict[str, Any]]:
+    def format_errors(self, errors: Union[Dict[str, Any], List[Any]]) -> List[Dict[str, Any]]:
         """Re-format the errors from Marshmallow."""
         exception = marshmallow.ValidationError(errors)
         field_errors = exception.normalized_messages()

@@ -11,17 +11,11 @@ try:
 except ImportError:
     jsonschema = None
 
-JSONSchemaInstance = Dict[str, Any]
-
 
 class JSONSchemaValidator(Validator):
     """A Validator that uses jsonschema schemas."""
 
-    def validate(
-        self,
-        instance,
-        schema: JSONSchemaInstance,
-    ) -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
+    def validate(self, instance: Any, schema: Dict[str, Any]) -> Tuple[Any, Union[Dict[str, Any], List[Any]]]:
         """Return the data and errors (if any) from validating `instance` against `schema`."""
         if not jsonschema:
             raise LambdaError('Required jsonschema dependency not found.')
