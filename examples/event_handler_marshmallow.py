@@ -1,6 +1,5 @@
-import json
-from marshmallow import Schema, fields, validates_schema
-from marshmallow.validate import Range, ValidationError
+from marshmallow import Schema, fields
+from marshmallow.validate import Range
 
 from lambda_handlers import validators
 from lambda_handlers.handlers import event_handler
