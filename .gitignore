@@ -72,3 +72,4 @@ node_modules
 
 # Mkdocs temp
 site
+docs/_*
