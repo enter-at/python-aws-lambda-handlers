@@ -4,17 +4,10 @@ import logging
 from typing import Any, Dict, Optional
 
 from lambda_handlers.types import Headers, APIGatewayProxyResult
-from lambda_handlers.errors import FormatError, NotFoundError, BadRequestError, ValidationError, ResultValidationError
+from lambda_handlers.errors import FormatError, NotFoundError, BadRequestError
 from lambda_handlers.response import CORSHeaders
 from lambda_handlers.handlers.event_handler import EventHandler
-from lambda_handlers.response.response_builder import (
-    ok,
-    not_found,
-    no_content,
-    bad_request,
-    bad_implementation,
-    internal_server_error,
-)
+from lambda_handlers.response.response_builder import ok, not_found, no_content, bad_request, internal_server_error
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +17,6 @@ class HTTPHandler(EventHandler):
     Decorator class to facilitate the definition of AWS HTTP Lambda handlers.
 
     Features:
-        - input validation,
         - output formatting,
         - CORS headers, and
         - error handling.
@@ -42,13 +34,10 @@ class HTTPHandler(EventHandler):
     output_format: Format, optional
         Formatter to format the output body from the return value of the handler function.
         Default:  formatters.output_format.json.
-
-    validator: Callable, optional
-        A callable or schema definition to validate: event, and result.
     """
 
-    def __init__(self, cors=None, input_format=None, output_format=None, validator=None):
-        super().__init__(input_format=input_format, output_format=output_format, validator=validator)
+    def __init__(self, cors=None, input_format=None, output_format=None):
+        super().__init__(input_format=input_format, output_format=output_format)
         self._cors = cors or CORSHeaders(origin='*', credentials=True)
 
     def after(self, result):
@@ -80,28 +69,22 @@ class HTTPHandler(EventHandler):
 
     def _create_response(self, result: APIGatewayProxyResult) -> Dict[str, Any]:
         result.headers = self._create_headers(result.headers)
-        return self.format_output(self.validate_result(result.asdict()))
+        return self.format_output(result.asdict())
 
     def _create_headers(self, headers: Optional[Headers]) -> Optional[Headers]:
         if not headers:
             headers = {}
-
         if self._output_format:
             headers['Content-Type'] = self._output_format.content_type
-
         if self._cors:
             headers.update(self._cors.create_headers())
-
         return headers or None
 
     @staticmethod
     def _handle_error(error) -> APIGatewayProxyResult:
         if isinstance(error, NotFoundError):
             return not_found(error.description)
-        if isinstance(error, ResultValidationError):
-            return bad_implementation(error.description)
-        if isinstance(error, (BadRequestError, FormatError, ValidationError)):
+        if isinstance(error, (BadRequestError, FormatError)):
             return bad_request(error.description)
-
         logger.error(error)
         return internal_server_error()

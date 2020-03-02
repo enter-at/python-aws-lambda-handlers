@@ -1,5 +1,4 @@
 import pytest
-from marshmallow import Schema, fields
 
 from lambda_handlers import validators
 from lambda_handlers.handlers import http_handler
@@ -65,7 +64,6 @@ class TestHTTPHandlerCustomBodyFormat:
         )
         def handler(event, context):
             return event['body']
-
         return handler
 
     def test_custom_body_formatting(self, handler):
@@ -107,7 +105,6 @@ class TestHTTPHandlerCustomOutputFormat:
         )
         def handler(event, context):
             return {'user_id': 'peter'}
-
         return handler
 
     def test_custom_output_format(self, handler):
@@ -115,7 +112,6 @@ class TestHTTPHandlerCustomOutputFormat:
         assert isinstance(response, dict)
         assert response['statusCode'] == 200
         assert response['body'] == 'user_id|peter'
-
         assert 'Content-Type' in response['headers']
         assert response['headers']['Content-Type'] == 'application/text+piped'
 
@@ -127,7 +123,6 @@ class TestHTTPHandlerOutputFormatNoBodyDefault:
         @http_handler()
         def handler(event, context):
             return None
-
         return handler
 
     def test_format_no_body(self, handler):
@@ -144,7 +139,6 @@ class TestHTTPHandlerOutputFormatNoBody:
         @http_handler()
         def handler(event, context):
             return no_content()
-
         return handler
 
     def test_format_no_body(self, handler):
@@ -152,38 +146,3 @@ class TestHTTPHandlerOutputFormatNoBody:
         assert isinstance(response, dict)
         assert response['statusCode'] == 204
         assert 'body' not in response
-
-
-class TestHTTPHandlerCustomMarshmallowValidator:
-
-    @pytest.fixture
-    def handler(self):
-        class UserSchema(Schema):
-            user_id = fields.Integer(required=True)
-
-        class ResponseSchema(Schema):
-            body = fields.Nested(UserSchema, required=True)
-            headers = fields.Dict(required=True)
-            statusCode = fields.Integer(required=True)
-
-        @http_handler(
-            validator=validators.http.marshmallow(body=UserSchema(), response=ResponseSchema()),
-        )
-        def handler(event, context):
-            return event['body']
-
-        return handler
-
-    @pytest.mark.parametrize(
-        'body,expected',
-        [
-            ('{"user_id": 1}', '{"user_id": 1}'),
-            ('{"user_id": "1"}', '{"user_id": 1}'),
-        ],
-    )
-    def test_custom_body_validator(self, handler, body, expected):
-        event = {'body': body}
-        response = handler(event, None)
-        assert isinstance(response, dict)
-        assert response['statusCode'] == 200
-        assert response['body'] == expected

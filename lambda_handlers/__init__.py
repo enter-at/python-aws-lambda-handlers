@@ -12,4 +12,3 @@ from lambda_handlers.version import __version__  # noqa
 from lambda_handlers.handlers import HTTPHandler, EventHandler, LambdaHandler  # noqa
 from lambda_handlers.response import cors_headers, response_builder  # noqa
 from lambda_handlers.formatters import input_format, output_format  # noqa
-from lambda_handlers.validators import jsonschema, marshmallow  # noqa
