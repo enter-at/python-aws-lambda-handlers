@@ -32,6 +32,12 @@ class NotFoundError(LambdaError):
     pass
 
 
+class EventValidationError(LambdaError):
+    """Event validation error."""
+
+    pass
+
+
 class FormatError(LambdaError):
     """Formatting error."""
 
