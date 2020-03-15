@@ -5,89 +5,129 @@
 Skipping the CORS headers default and configuring it.
 
 ```python
-from lambda_handlers import http_handler
-from lambda_handlers.response import cors
+>>> from pprint import pprint
 
-@http_handler(
-    cors=cors(origin='localhost', credentials=False),
-)
-def handler(event, context):
-    return event['body']
+>>> from lambda_handlers.handlers import http_handler
+>>> from lambda_handlers.response import cors
+
+>>> @http_handler(
+...     cors=cors(origin='localhost', credentials=False),
+... )
+... def handler(event, context):
+...     return event['body']
+
+>>> payload = {'body': '{"answer": 42}'}    
+>>> response = handler(payload, None)
+>>> pprint(response)
+{'body': '{"answer": 42}',
+ 'headers': {'Access-Control-Allow-Origin': 'localhost',
+             'Content-Type': 'application/json'},
+ 'statusCode': 200}
+
 ```
 
 Using jsonschema to validate a User model as input.
 
 ```python
-from typing import Dict, Any
+>>> from pprint import pprint
+>>> from typing import Any, Dict, List, Tuple, Union
 
-from lambda_handlers import validators, http_handler
+>>> import jsonschema
 
-user_schema: Dict[str, Any] = {
-    'type': 'object',
-    'properties': {
-        'user_id': {'type': 'number'},
-    },
-}
+>>> from lambda_handlers.handlers import http_handler
+>>> from lambda_handlers.errors import EventValidationError
 
+>>> class SchemaValidator:
+...    """A payload validator that uses jsonschema schemas."""
+...
+...    @classmethod
+...    def validate(cls, instance, schema: Dict[str, Any]):
+...        """Raise EventValidationError (if any error) from validating `instance` against `schema`."""
+...        validator = jsonschema.Draft7Validator(schema)
+...        errors = list(validator.iter_errors(instance))
+...        if errors:
+...            field_errors = sorted(validator.iter_errors(instance), key=lambda error: error.path)
+...            raise EventValidationError(field_errors)
+...
+...    @staticmethod
+...    def format_errors(errors: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+...        """Re-format the errors from JSONSchema."""
+...        path_errors: Dict[str, List[str]] = defaultdict(list)
+...        for error in errors:
+...            path_errors[error.path.pop()].append(error.message)
+...        return [{path: messages} for path, messages in path_errors.items()]
 
-@http_handler(
-    validator=validators.jsonschema(body=user_schema),
-)
-def handler(event, context):
-    user = event['body']
-    return user
+>>> user_schema: Dict[str, Any] = {
+...     'type': 'object',
+...     'properties': {
+...         'user_id': {'type': 'number'},
+...     },
+... }
+
+>>> @http_handler()
+... def handler(event, context):
+...     user = event['body']
+...     SchemaValidator.validate(user, user_schema)
+...     return user
+
+>>> payload = {'body': '{"user_id": 42}'}    
+>>> response = handler(payload, None)
+>>> pprint(response)
+{'body': '{"user_id": 42}',
+ 'headers': {'Access-Control-Allow-Credentials': True,
+             'Access-Control-Allow-Origin': '*',
+             'Content-Type': 'application/json'},
+ 'statusCode': 200}
+
 ```
 
 Using Marshmallow to validate a User model as input body and response body.
 
 ```python
-from lambda_handlers import validators
-from lambda_handlers.handlers import http_handler
-from marshmallow import Schema, fields
+>>> from pprint import pprint
+>>> from typing import Any, Dict, List, Tuple, Union
 
+>>> from marshmallow import Schema, fields, ValidationError
 
-class UserSchema(Schema):
-    user_id = fields.Integer(required=True)
+>>> from lambda_handlers.handlers import http_handler
+>>> from lambda_handlers.errors import EventValidationError
 
+>>> class SchemaValidator:
+...     """A data validator that uses Marshmallow schemas."""
+... 
+...     @classmethod
+...     def validate(cls, instance: Any, schema: Schema) -> Any:
+...         """Return the data or raise EventValidationError if any error from validating `instance` against `schema`."""
+...         try:
+...             return schema.load(instance)
+...         except ValidationError as error:
+...             raise EventValidationError(error.messages)
 
-class ResponseSchema(Schema):
-    body = fields.Nested(UserSchema, required=True)
-    headers = fields.Dict(required=True)
-    statusCode = fields.Integer(required=True)
+>>> class UserSchema(Schema):
+...     user_id = fields.Integer(required=True)
 
+>>> @http_handler()
+... def handler(event, context):
+...     user = event['body']
+...     SchemaValidator.validate(user, UserSchema())
+...     return user
 
-@http_handler(
-    validator=validators.marshmallow(
-        body=UserSchema(),
-        response=ResponseSchema(),
-    ),
-)
-def handler(event, context):
-    user = event['body']
-    return user
-```
+>>> payload = {'body': '{"user_id": 42}'}    
+>>> response = handler(payload, None)
+>>> pprint(response)
+{'body': '{"user_id": 42}',
+ 'headers': {'Access-Control-Allow-Credentials': True,
+             'Access-Control-Allow-Origin': '*',
+             'Content-Type': 'application/json'},
+ 'statusCode': 200}
 
-## Event handlers
+>>> payload = {'body': '{"user_id": "marvin"}'}    
+>>> response = handler(payload, None)
+>>> pprint(response)
+{'body': '{"errors": {"user_id": ["Not a valid integer."]}}',
+ 'headers': {'Access-Control-Allow-Credentials': True,
+             'Access-Control-Allow-Origin': '*',
+             'Content-Type': 'application/json'},
+ 'statusCode': 400}
 
-Using event_handler to validate input with Marshmallow.
-
-```python
-from lambda_handlers import validators
-from lambda_handlers.handlers import event_handler
-from marshmallow import Schema, fields
-
-
-class UserSchema(Schema):
-    user_id = fields.Integer(required=True)
-
-
-@event_handler(
-    validator=validators.marshmallow(
-        body=UserSchema(),
-        response=ResponseSchema(),
-    ),
-)
-def handler(event, context):
-    user = event['body']
-    return user
 ```
