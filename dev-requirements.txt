@@ -17,5 +17,5 @@ wily
 rope
 twine
 pydocstyle
-jsonschema==3.0.2
+jsonschema==3.2.0
 marshmallow==3.5.0
