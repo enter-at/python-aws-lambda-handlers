@@ -1,0 +1,41 @@
+---
+name: Code checks and tests
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  codeChecks:
+    name: tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install Python and pipenv
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.7'
+
+    - name: Install dependencies
+      run: make install-dev
+
+    - name: Lint code
+      run: tox -e lint
+
+    - name: Lint docs Markdown files
+      run: tox -e doclint
+
+    - name: Check imports order
+      run: tox -e isort
+
+    - name: Static type checks
+      run: tox -e mypy
+
+    - name: Run tests
+      run: tox -e tests
