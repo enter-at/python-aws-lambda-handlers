@@ -56,5 +56,4 @@ def _build_response(result: Union[LambdaError, Any], status_code: HTTPStatus) ->
         body = {'errors': result.description}
     else:
         body = result
-
     return APIGatewayProxyResult(body=body, statusCode=status_code.value)

@@ -7,9 +7,10 @@ as JSON, and also formats the response as JSON with:
     - the handler return value in the body.
 
 ```python
-from lambda_handlers.handlers import http_handler
+>>> from lambda_handlers.handlers import http_handler
 
-@http_handler()
-def handler(event, context):
-    return event['body']
+>>> @http_handler()
+... def handler(event, context):
+...     return event['body']
+
 ```

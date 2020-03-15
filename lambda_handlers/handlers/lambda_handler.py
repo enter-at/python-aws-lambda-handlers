@@ -25,13 +25,12 @@ class LambdaHandler(ABC):
                 return self.after(self._call_handler(handler_self, handler, *self.before(*args[-2:])))
             except Exception as exception:
                 return self.on_exception(exception)
-
         return wrapper
 
-    def _call_handler(self, handler_self, handler, event, context):
+    @staticmethod
+    def _call_handler(handler_self, handler, event, context):
         if handler_self:
             return handler(handler_self, event, context)
-
         return handler(event, context)
 
     def before(self, event: Event, context: LambdaContext) -> Tuple[Event, LambdaContext]:

@@ -10,7 +10,7 @@ Event = Dict[str, Any]
 class EventAwareException(Exception):
     def __init__(self, message: str, event: Event):
         self.event = event
-        return super().__init__(message)
+        super().__init__(message)
 
 
 class CallOrderAwareHandler(LambdaHandler):
@@ -37,7 +37,6 @@ def function_handler():
         if context is None:
             raise EventAwareException(message='no such context', event=event)
         return event
-
     return handler
 
 
@@ -49,7 +48,6 @@ def method_handler():
             if context is None:
                 raise EventAwareException(message='no such context', event=event)
             return event
-
     return Adapter()
 
 
@@ -61,14 +59,12 @@ class TestLambdaHandlerDecorateFunction:
 
     def test_call_order(self, function_handler, event):
         result = function_handler(event, {})
-
         assert result == event
         assert event['route'] == ['before', 'after']
 
     def test_call_exception(self, function_handler, event):
         with pytest.raises(EventAwareException, match='no such context'):
             function_handler(event, None)
-
         assert event['route'] == ['before', 'on_exception']
 
 
@@ -80,12 +76,10 @@ class TestLambdaHandlerDecorateMethod:
 
     def test_call_order(self, method_handler, event):
         result = method_handler(event, {})
-
         assert result == event
         assert event['route'] == ['before', 'after']
 
     def test_call_exception(self, method_handler, event):
         with pytest.raises(EventAwareException, match='no such context'):
             method_handler(event, None)
-
         assert event['route'] == ['before', 'on_exception']

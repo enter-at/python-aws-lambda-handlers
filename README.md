@@ -8,9 +8,8 @@
 [![](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![](https://badges.renovateapi.com/github/enter-at/lambda-handlers)](https://renovatebot.com/)
 
-An opinionated Python package that facilitates specifying AWS Lambda handlers.
-
-It includes input validation, error handling and response formatting.
+An opinionated Python package that facilitates specifying AWS Lambda handlers including 
+input validation, error handling and response formatting.
 
 ## Documentation
 Read more about the project motivation and API documentation at:
