@@ -1,6 +1,5 @@
 import pytest
 
-from lambda_handlers import validators
 from lambda_handlers.handlers import http_handler
 from lambda_handlers.response import cors
 from lambda_handlers.formatters.format import format
