@@ -13,7 +13,6 @@ class TestHTTPHandlerDefaults:
         @http_handler()
         def handler(event, context):
             return {'user_id': 12}
-
         return handler
 
     def test_empty_body_validation(self, handler):

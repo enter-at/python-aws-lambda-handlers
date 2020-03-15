@@ -1,6 +1,6 @@
 import pytest
 
-from lambda_handlers import APIGatewayProxyResult
+from lambda_handlers.types import APIGatewayProxyResult
 from lambda_handlers.response.response_builder import (
     ok,
     created,
