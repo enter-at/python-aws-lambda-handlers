@@ -2,6 +2,9 @@
   "extends": [
     "config:base"
   ],
+  "pip_requirements": {
+    "fileMatch": ["dev-requirements.txt", "docs/requirements.txt"]
+  },
   "pipenv": {
     "enabled": true
   }
