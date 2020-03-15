@@ -29,13 +29,10 @@ help:
 
 
 install:
-	python -m pip install pipenv
-	pipenv install
 	python -m pip install .
 
 install-ci:
-	python -m pip install pipenv
-	pipenv install --dev
+	pip install -r dev-requirements.txt
 	python -m pip install -e .
 
 install-dev: install-ci
@@ -45,13 +42,13 @@ clean: clean-build clean-pyc clean-caches
 
 clean-build:
 	rm -fr build/
-	rm -fr dist/
-	rm -fr .eggs/
-	rm -fr *.egg-info
-	rm -fr *.spec
+	find . -name 'dist' -exec rm -rf {} +
+	find . -name '.eggs' -exec rm -rf {} +
+	find . -name '*.egg-info' -delete
+	find . -name '*.spec' -delete
 
 clean-pyc:
-	pyclean $(project-name)
+	find . -name '*.py?' -delete
 	find . -name '*~' -exec rm -f {} +
 	find . -name __pycache__ -exec rm -rf {} +
 	find . -name '*.log*' -delete
@@ -59,8 +56,8 @@ clean-pyc:
 	find . -name '*.egg-info' -exec rm -rf {} +
 
 clean-caches:
-	rm -rf .tox
-	rm -rf .pytest_cache
+	find . -name '.tox' -exec rm -rf {} +
+	find . -name '.pytest_cache' -exec rm -rf {} +
 
 lint:
 	tox -e lint
