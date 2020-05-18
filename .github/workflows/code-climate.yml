@@ -1,0 +1,39 @@
+---
+name: CodeClimate report
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  codeChecks:
+    name: tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install Python and pipenv
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.7'
+
+    - name: Install dependencies
+      run: make install-dev
+
+    - name: Fetch test reporter from CodeClimate
+      run: |
+        export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+
+    - name: Run tests
+      run: tox -e tests
+
+    - name: Update CodeClimate with new test report
+      if: success()
+      run: |
+        coverage xml -o coverage.xml
+        ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code 0
