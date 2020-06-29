@@ -11,7 +11,7 @@ pytest-mock
 watchdog
 mypy
 isort
-tox==3.15.0
+tox==3.16.1
 coverage
 wily
 rope
