@@ -12,18 +12,9 @@ To install the latest version of lambda-handlers simply run:
 pip install lambda-handlers
 ```
 
-If you are going to use validation, you should choose between
+If you are going to use validation, we have examples that work with
 [Marshmallow](https://pypi.org/project/marshmallow/) or
 [jsonschema](https://pypi.org/project/jsonschema/).
 
-To install with one of these:
-
-```bash
-pip install 'lambda-handlers[marshmallow]'
-```
-
-or
-
-```bash
-pip install 'lambda-handlers[jsonschema]'
-```
+But you can adapt a LambdaHandler to use your favourite validation module.
+Please share it with us or create an issue if you need any help with that.
