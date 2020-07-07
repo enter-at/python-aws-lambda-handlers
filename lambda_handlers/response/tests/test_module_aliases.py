@@ -2,7 +2,7 @@ from typing import Any, Type
 
 import pytest
 
-import lambda_handlers.response as subject
+from lambda_handlers import response as subject
 from lambda_handlers.response.cors_headers import CORSHeaders
 
 
