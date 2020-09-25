@@ -14,6 +14,7 @@ class EventAwareException(Exception):
 
 
 class CallOrderAwareHandler(LambdaHandler):
+
     def before(self, event: Event, context: LambdaContext) -> Tuple[Event, LambdaContext]:
         event['route'].append('before')
         return super().before(event, context)
