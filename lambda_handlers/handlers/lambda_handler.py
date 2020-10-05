@@ -17,12 +17,24 @@ class LambdaHandler(ABC):
     def __init__(self, handler: Optional[Callable] = None):
         self._handler = handler
 
+    @property
+    def _number_of_arguments(self):
+        return 2  # event, context
+
     def __call__(self, handler: Callable):  # noqa: D102
         @wraps(handler)
         def wrapper(*args):
             try:
-                handler_self = args[0] if len(args) > 2 else None
-                return self.after(self._call_handler(handler_self, handler, *self.before(*args[-2:])))
+                if len(args) > self._number_of_arguments:
+                    handler_self = args[0]
+                    args = args[1:]
+                elif len(args) == self._number_of_arguments:
+                    handler_self = None
+                else:
+                    raise RuntimeError(
+                        f'The number of arguments for the handler is expected to be {self._number_of_arguments}.'
+                    )
+                return self.after(self._call_handler(handler_self, handler, *self.before(*args)))
             except Exception as exception:
                 return self.on_exception(exception)
         return wrapper
