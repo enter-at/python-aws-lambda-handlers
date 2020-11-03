@@ -25,4 +25,4 @@ jobs:
             @semantic-release/exec
             @semantic-release/github
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
