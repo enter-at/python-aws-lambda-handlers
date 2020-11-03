@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.2...v3.0.3) (2020-11-03)
+
+
+### Bug Fixes
+
+* **errors:** add back EventValidationError as ValidationError ([2eaa8fe](https://github.com/enter-at/python-aws-lambda-handlers/commit/2eaa8fe302520429a0aee217c9df50e5766965e7))
+
 ## [3.0.2](https://github.com/enter-at/lambda-handlers/compare/v3.0.1...v3.0.2) (2019-10-05)
 
 
