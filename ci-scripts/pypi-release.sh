@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# shellcheck source=ci-scripts/common.sh
 SCRIPT_PATH=$(dirname "$0")
 source "${SCRIPT_PATH}"/common.sh
 
