@@ -16,7 +16,7 @@ def handler(event, context):
 ```
 
 ```bash
-aws lambda invoke --function-name example /tmp/response.json
+aws lambda invoke --function-name example response.json
 cat response.json
 ```
 
