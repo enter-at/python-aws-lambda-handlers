@@ -1,0 +1,41 @@
+name: Generate Readme
+
+on:
+  # Open a PR to update README on merge to master (as necessary)
+  push:
+    branches:
+      - master
+
+  # Update README nightly
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: readme/update
+        shell: bash
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_BOT_TOKEN }}"
+        run: |
+          make init
+          make readme/deps
+          make readme
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v2
+        with:
+          labels: automated pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_BOT_TOKEN }}
+          COMMIT_MESSAGE: "docs(README): auto update all sections"
+          PULL_REQUEST_TITLE: Automatic Update of README.md
+          PULL_REQUEST_BODY: |-
+            This is an auto-generated PR which updates the `README.md` from the `README.yaml`
+            using the [`cloudposse/build-harness`](https://github.com/cloudposse/build-harness).
+          PULL_REQUEST_BRANCH: github-actions/auto-readme
+          BRANCH_SUFFIX: timestamp

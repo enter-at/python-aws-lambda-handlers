@@ -73,3 +73,7 @@ node_modules
 # Mkdocs temp
 site
 docs/_*
+
+.build-harness
+build-harness
+.README.md.gotmpl

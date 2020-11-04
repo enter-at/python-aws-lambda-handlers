@@ -1,0 +1,53 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: python-aws-lambda-handlers
+
+# Tags of this project
+tags:
+    - aws
+    - aws-lambda
+    - python
+    - handler
+    - pypi
+
+# Categories of this project
+categories:
+    - pypi-modules
+    - aws
+    - aws-lambda
+    - python
+    - handler
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: enter-at/python-aws-lambda-handlers
+
+# Badges to display
+badges:
+    - name: "Build Status"
+      image: "https://github.com/enter-at/python-aws-lambda-handlers/workflows/Code%20checks%20and%20tests/badge.svg"
+      url: "https://github.com/enter-at/python-aws-lambda-handlers/actions?query=workflow%3A%22Code+checks+and+tests%22"
+    - name: "Release"
+      image: "https://img.shields.io/pypi/v/lambda-handlers.svg"
+      url: "https://pypi.org/project/lambda-handlers/"
+    - name: "CodeClimate"
+      image: "https://github.com/enter-at/python-aws-lambda-handlers/workflows/CodeClimate%20report/badge.svg"
+      url: "https://github.com/enter-at/python-aws-lambda-handlers/actions?query=workflow%3A%22CodeClimate+report%22"
+
+# Short description of this project
+description: |-
+    An opinionated Python package that facilitates specifying AWS Lambda handlers including
+    input validation, error handling and response formatting.
+
+include:
+    - "docs/quickstart.md"
+    - "docs/examples.md"
+    - "docs/headers.md"
+    - "docs/errors.md"
