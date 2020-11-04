@@ -23,7 +23,7 @@ jobs:
         python-version: '3.7'
 
     - name: Install dependencies
-      run: make install-dev
+      run: make install-ci
 
     - name: Lint code
       run: tox -e lint
