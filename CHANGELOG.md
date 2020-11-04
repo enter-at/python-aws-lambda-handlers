@@ -1,3 +1,10 @@
+## [3.0.5](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.4...v3.0.5) (2020-11-04)
+
+
+### Bug Fixes
+
+* **ci:** add PYPI_PASS & PYPI_USER ([63b3891](https://github.com/enter-at/python-aws-lambda-handlers/commit/63b3891048a3f9875b13c6242d3caa30056f6401))
+
 ## [3.0.4](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.3...v3.0.4) (2020-11-04)
 
 
