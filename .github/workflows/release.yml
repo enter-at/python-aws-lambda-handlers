@@ -14,12 +14,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-
       - name: Semantic Release
-        run: ./ci-scripts/semantic-release.sh
+        uses: cycjimmy/semantic-release-action@v2
+        id: semantic
+        with:
+          branch: master
+          extra_plugins: |
+            @semantic-release/git
+            @semantic-release/changelog
+            @semantic-release/exec
+            @semantic-release/github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
