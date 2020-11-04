@@ -48,7 +48,10 @@ class SchemaValidator:
 
     @classmethod
     def validate(cls, instance, schema: Dict[str, Any]):
-        """Raise EventValidationError (if any error) from validating `instance` against `schema`."""
+        """
+        Raise EventValidationError (if any error) from validating 
+        `instance` against `schema`.
+        """
         validator = jsonschema.Draft7Validator(schema)
         errors = list(validator.iter_errors(instance))
         if errors:
