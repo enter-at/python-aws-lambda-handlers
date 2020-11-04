@@ -1,3 +1,14 @@
+## [3.0.4](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.3...v3.0.4) (2020-11-04)
+
+
+### Bug Fixes
+
+* **workflow:** restore semantic release action ([6548dc8](https://github.com/enter-at/python-aws-lambda-handlers/commit/6548dc8e5d129c97bffd49ba33ca68fb8909e475))
+* debug pipeline ([ba2dffd](https://github.com/enter-at/python-aws-lambda-handlers/commit/ba2dffd0bd0563a32546d935a0c2935f96e806bc))
+* debug pipeline ([d10c8bb](https://github.com/enter-at/python-aws-lambda-handlers/commit/d10c8bb376a211fc5b186321e9bf6b679209cb19))
+* **docs:** trigger semantic release ([940b1c8](https://github.com/enter-at/python-aws-lambda-handlers/commit/940b1c82454577a2f16768dbe433d59af464054d))
+* **workflow/release:** update bot token ([d6d5f8d](https://github.com/enter-at/python-aws-lambda-handlers/commit/d6d5f8dfa03f8ea0a26f7951890decd2db4f0d82))
+
 ## [3.0.3](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.2...v3.0.3) (2020-11-03)
 
 
