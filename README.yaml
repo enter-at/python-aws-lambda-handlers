@@ -41,6 +41,13 @@ badges:
       image: "https://github.com/enter-at/python-aws-lambda-handlers/workflows/CodeClimate%20report/badge.svg"
       url: "https://github.com/enter-at/python-aws-lambda-handlers/actions?query=workflow%3A%22CodeClimate+report%22"
 
+related:
+  - name: "node-aws-lambda-handlers"
+    description: |
+        An opinionated Typescript package that facilitates specifying AWS Lambda handlers including
+        input validation, error handling and response formatting.
+    url: "https://github.com/enter-at/node-aws-lambda-handlers"
+
 # Short description of this project
 description: |-
     An opinionated Python package that facilitates specifying AWS Lambda handlers including
