@@ -118,7 +118,10 @@ class SchemaValidator:
 
     @classmethod
     def validate(cls, instance, schema: Dict[str, Any]):
-        """Raise EventValidationError (if any error) from validating `instance` against `schema`."""
+        """
+        Raise EventValidationError (if any error) from validating 
+        `instance` against `schema`.
+        """
         validator = jsonschema.Draft7Validator(schema)
         errors = list(validator.iter_errors(instance))
         if errors:
@@ -281,6 +284,22 @@ FormatError
 ```python
 ValidationError
 ```
+
+
+
+## Share the Love
+
+Like this project?
+Please give it a ★ on [our GitHub](https://github.com/enter-at/python-aws-lambda-handlers)!
+
+
+## Related Projects
+
+Check out these related projects.
+
+- [node-aws-lambda-handlers](https://github.com/enter-at/node-aws-lambda-handlers) - An opinionated Typescript package that facilitates specifying AWS Lambda handlers including
+input validation, error handling and response formatting.
+
 
 
 
