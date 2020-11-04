@@ -19,6 +19,9 @@ jobs:
         with:
           python-version: '3.7'
 
+      - name: Install dependencies
+        run: make install-dev
+
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
         id: semantic
