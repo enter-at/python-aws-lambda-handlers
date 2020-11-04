@@ -1,3 +1,10 @@
+## [3.0.6](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.5...v3.0.6) (2020-11-04)
+
+
+### Bug Fixes
+
+* **CI:** fix typo in release step ([8ffefc9](https://github.com/enter-at/python-aws-lambda-handlers/commit/8ffefc9756c7e83572012751c17d02a5c5beebd2))
+
 ## [3.0.5](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.4...v3.0.5) (2020-11-04)
 
 
