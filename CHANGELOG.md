@@ -1,3 +1,10 @@
+## [3.0.8](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.7...v3.0.8) (2020-11-05)
+
+
+### Bug Fixes
+
+* **HTTPHandler:** do not parse body if value is  None ([bd4402b](https://github.com/enter-at/python-aws-lambda-handlers/commit/bd4402b7f5e5acf0c1c0d1664e109688f484d5ca))
+
 ## [3.0.7](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.6...v3.0.7) (2020-11-04)
 
 
