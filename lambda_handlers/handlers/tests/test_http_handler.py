@@ -20,6 +20,11 @@ class TestHTTPHandlerDefaults:
         assert isinstance(response, dict)
         assert response['statusCode'] == 200
 
+    def test_none_body_validation(self, handler):
+        response = handler({'body': None}, None)
+        assert isinstance(response, dict)
+        assert response['statusCode'] == 200
+
     def test_invalid_body_validation(self, handler):
         response = handler({'body': '{.x'}, None)
         assert isinstance(response, dict)

@@ -54,7 +54,7 @@ class HTTPHandler(EventHandler):
 
     def format_input(self, event):
         """Return `event` with a formatted `event['body']`."""
-        if 'body' in event:
+        if 'body' in event and event['body']:
             try:
                 event['body'] = self._input_format.format(event['body'])
             except FormatError as error:
