@@ -1,3 +1,11 @@
+## [3.0.7](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.6...v3.0.7) (2020-11-04)
+
+
+### Bug Fixes
+
+* **CI:** avoid installing pre-commit in CI pipelines ([4c31d14](https://github.com/enter-at/python-aws-lambda-handlers/commit/4c31d143b7f9f351895a35526f6691ee9f2265d8))
+* **CI:** install dev dependencies for the release step ([a63f415](https://github.com/enter-at/python-aws-lambda-handlers/commit/a63f41575f718a7c61da3e7941856beeb59ed6a1))
+
 ## [3.0.6](https://github.com/enter-at/python-aws-lambda-handlers/compare/v3.0.5...v3.0.6) (2020-11-04)
 
 
