@@ -37,9 +37,12 @@ badges:
     - name: "Release"
       image: "https://img.shields.io/pypi/v/lambda-handlers.svg"
       url: "https://pypi.org/project/lambda-handlers/"
-    - name: "CodeClimate"
-      image: "https://github.com/enter-at/python-aws-lambda-handlers/workflows/CodeClimate%20report/badge.svg"
-      url: "https://github.com/enter-at/python-aws-lambda-handlers/actions?query=workflow%3A%22CodeClimate+report%22"
+    - name: "Code Climate Maintainability"
+      image: "https://api.codeclimate.com/v1/badges/852b53c3aab82fe1ebe7/maintainability"
+      url: "https://codeclimate.com/github/enter-at/python-aws-lambda-handlers/maintainability"
+    - name: "Code Climate Test Coverage"
+      image: "https://api.codeclimate.com/v1/badges/852b53c3aab82fe1ebe7/test_coverage"
+      url: "https://codeclimate.com/github/enter-at/python-aws-lambda-handlers/test_coverage"
 
 related:
   - name: "node-aws-lambda-handlers"
