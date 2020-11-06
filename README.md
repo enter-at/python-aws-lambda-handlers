@@ -12,7 +12,7 @@
 
 [<img src="https://res.cloudinary.com/enter-at/image/upload/v1576145406/static/logo-svg.svg" alt="enter-at" width="100">][website]
 
-# python-aws-lambda-handlers [![Build Status](https://github.com/enter-at/python-aws-lambda-handlers/workflows/Code%20checks%20and%20tests/badge.svg)](https://github.com/enter-at/python-aws-lambda-handlers/actions?query=workflow%3A%22Code+checks+and+tests%22) [![Release](https://img.shields.io/pypi/v/lambda-handlers.svg)](https://pypi.org/project/lambda-handlers/) [![CodeClimate](https://github.com/enter-at/python-aws-lambda-handlers/workflows/CodeClimate%20report/badge.svg)](https://github.com/enter-at/python-aws-lambda-handlers/actions?query=workflow%3A%22CodeClimate+report%22)
+# python-aws-lambda-handlers [![Build Status](https://github.com/enter-at/python-aws-lambda-handlers/workflows/Code%20checks%20and%20tests/badge.svg)](https://github.com/enter-at/python-aws-lambda-handlers/actions?query=workflow%3A%22Code+checks+and+tests%22) [![Release](https://img.shields.io/pypi/v/lambda-handlers.svg)](https://pypi.org/project/lambda-handlers/) [![Code Climate Maintainability](https://api.codeclimate.com/v1/badges/852b53c3aab82fe1ebe7/maintainability)](https://codeclimate.com/github/enter-at/python-aws-lambda-handlers/maintainability) [![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/852b53c3aab82fe1ebe7/test_coverage)](https://codeclimate.com/github/enter-at/python-aws-lambda-handlers/test_coverage)
 
 
 An opinionated Python package that facilitates specifying AWS Lambda handlers including
