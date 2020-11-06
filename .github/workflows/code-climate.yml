@@ -28,6 +28,8 @@ jobs:
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter before-build
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
     - name: Run tests
       run: tox -e tests
@@ -37,3 +39,5 @@ jobs:
       run: |
         coverage xml -o coverage.xml
         ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code 0
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
