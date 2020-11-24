@@ -27,7 +27,7 @@ jobs:
           make readme
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v2
+        uses: peter-evans/create-pull-request@v3
         with:
           labels: automated pr
         env:
