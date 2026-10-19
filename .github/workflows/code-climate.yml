@@ -1,10 +1,9 @@
 ---
 name: CodeClimate report
 
+# Disabled: project is deprecated. Manual runs only.
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch: {}
 
 jobs:
   codeChecks:

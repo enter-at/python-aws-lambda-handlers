@@ -1,14 +1,8 @@
 name: Generate Readme
 
+# Disabled: project is deprecated. Manual runs only.
 on:
-  # Open a PR to update README on merge to master (as necessary)
-  push:
-    branches:
-      - master
-
-  # Update README nightly
-  schedule:
-    - cron: "0 0 * * *"
+  workflow_dispatch: {}
 
 jobs:
   update:

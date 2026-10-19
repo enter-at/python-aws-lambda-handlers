@@ -15,6 +15,11 @@
 # python-aws-lambda-handlers [![Build Status](https://github.com/enter-at/python-aws-lambda-handlers/workflows/Code%20checks%20and%20tests/badge.svg)](https://github.com/enter-at/python-aws-lambda-handlers/actions?query=workflow%3A%22Code+checks+and+tests%22) [![Release](https://img.shields.io/pypi/v/lambda-handlers.svg)](https://pypi.org/project/lambda-handlers/) [![Code Climate Maintainability](https://api.codeclimate.com/v1/badges/852b53c3aab82fe1ebe7/maintainability)](https://codeclimate.com/github/enter-at/python-aws-lambda-handlers/maintainability) [![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/852b53c3aab82fe1ebe7/test_coverage)](https://codeclimate.com/github/enter-at/python-aws-lambda-handlers/test_coverage)
 
 
+> [!WARNING]
+> **This project is deprecated and no longer maintained (October 2026).**
+> There will be no new releases. The `lambda-handlers` package stays available on PyPI,
+> but it will not get bug fixes or security updates. Issues and pull requests are not monitored.
+
 An opinionated Python package that facilitates specifying AWS Lambda handlers including
 input validation, error handling and response formatting.
 
