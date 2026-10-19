@@ -1,5 +1,9 @@
 # lambda-handlers
 
+> **This project is deprecated and no longer maintained (October 2026).**
+> There will be no new releases. The `lambda-handlers` package stays available on PyPI,
+> but it will not get bug fixes or security updates. Issues and pull requests are not monitored.
+
 An opinionated Python package that facilitates specifying AWS Lambda handlers.
 
 It includes input validation, error handling and response formatting.
